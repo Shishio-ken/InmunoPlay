@@ -1,0 +1,34 @@
+<main class="main-content">
+  <section class="hero">
+    <h1 class="hero-title">Bienvenido a <span class="highlight">ImmunoPlay</span></h1>
+    <p class="hero-subtitle">La plataforma educativa para aprender y jugar con propósito.</p>
+
+    {{#unless user}}
+      <a href="/signin" class="primary-btn">Comienza ahora</a>
+    {{/unless}}
+  </section>
+
+  <section class="features">
+    <div class="feature-box">
+      <h2>📘 Módulo Informativo</h2>
+      <p>Accede a explicaciones claras y visuales sobre conceptos relacionados con leucemias y diagnóstico morfológico. Ideal para estudiantes y profesionales en formación.</p>
+    </div>
+
+    <div class="feature-box">
+      <h2>🧪 Test de Conocimientos</h2>
+      <p>Evalúa tus conocimientos con preguntas diseñadas para reforzar el aprendizaje. Obtén retroalimentación inmediata y mejora tus resultados.</p>
+    </div>
+
+    <div class="feature-box">
+      <h2>🎮 Juego Educativo</h2>
+      <p>Aprender nunca fue tan divertido. Explora nuestro juego interactivo y reta tus habilidades mientras estudias.</p>
+    </div>
+
+    {{#if user}}
+    <div class="feature-box">
+      <h2>🛠️ Herramientas para Administradores</h2>
+      <p>Accede a la gestión de usuarios y preguntas, mantén el sistema actualizado y adaptado a las necesidades de aprendizaje.</p>
+    </div>
+    {{/if}}
+  </section>
+</main>

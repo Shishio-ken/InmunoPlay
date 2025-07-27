@@ -1,0 +1,48 @@
+<main class="main-content">
+  <h1>Editar Pregunta</h1>
+  <p>Aquí puedes modificar la pregunta y sus opciones:</p>
+
+  <div class="info-box">
+    <form action="/links/edit/{{pregunta.id}}" method="POST" id="preguntaForm">
+      <!-- Enunciado -->
+      <div class="form-group mb-3">
+        <label for="enunciado">Pregunta:</label>
+        <input 
+          type="text" 
+          class="form-control"
+          name="enunciado"
+          placeholder="Escribe la pregunta"
+          value="{{pregunta.enunciado}}"
+          required>
+      </div>
+
+      <!-- Opciones -->
+      <div id="opcionesContainer">
+        {{#each opciones}}
+          <div class="form-group mb-3">
+            <label>Opción {{inc @index}}:</label>
+            <input 
+              type="text"
+              class="form-control"
+              name="opciones[]"
+              value="{{texto_opcion}}"
+              required>
+            <div class="form-check mt-1">
+              <input 
+                class="form-check-input"
+                type="radio"
+                name="opcion_correcta"
+                value="{{@index}}"
+                {{#if es_correcta}}checked{{/if}}>
+              <label class="form-check-label">Esta es la correcta</label>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      <!-- Botones -->
+      <button type="submit" class="primary-btn">Actualizar Pregunta</button>
+      <a href="/links/add" class="primary-btn" style="background: #999;">Cancelar</a>
+    </form>
+  </div>
+</main>

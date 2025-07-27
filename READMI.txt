@@ -1,0 +1,20 @@
+*****************************
+Importante tener descargado node.js en el computador
+
+*****************************
+Para iniciar el proyecto toca abir la consola de visual o desde el cmd pero estando en la dirección de la carpeta, poner el siguiente comando para iniciar el proyecto:
+
+npm run dev
+
+si no funciona y da error por npm, entonces poner lo siguiente:
+
+npm install
+
+Cabe aclarar que en tu dispositivo debes tener instalado node.js
+
+*****************************
+Para entrar a la base de datos desde consola:
+
+cd/
+cd c:\xampp\mysql\bin
+mysql -u root -h localhost -p

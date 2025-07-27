@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Sistema Educativo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {{#if activeHome}}active{{/if}}" href="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if activeList}}active{{/if}}" href="/links">Preguntas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{#if activeAdd}}active{{/if}}" href="/links/add">Agregar</a>
+        </li>
+        {{#if user}}
+          <li class="nav-item">
+            <a class="nav-link {{#if activeProfile}}active{{/if}}" href="/profile">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Cerrar sesión</a>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link {{#if activeSignup}}active{{/if}}" href="/signup">Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{#if activeLogin}}active{{/if}}" href="/login">Login</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>

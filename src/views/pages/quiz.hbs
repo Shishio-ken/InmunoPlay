@@ -1,0 +1,25 @@
+<main>
+    <div class="quiz-app" id="quiz-app">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="question-screen">
+            <div class="question-container">
+                <div class="question-number" id="question-number"></div>
+                <div class="question-text" id="question-text"></div>
+                <div class="options-container" id="options-container"></div>
+                <button class="next-btn" id="next-btn" disabled>Siguiente</button>
+                <div class="feedback" id="feedback"></div>
+            </div>
+        </div>
+        <div class="results-container hidden" id="results-screen">
+            <div class="celebration" id="celebration">🎉</div>
+            <h2 class="results-title">¡Test completado!</h2>
+            <div class="score" id="final-score"></div>
+            <p class="results-message" id="results-message"></p>
+            <button class="restart-btn" id="restart-btn">Volver a intentar</button>
+        </div>
+    </div>
+</main>
+
+<script src="/js/quiz.js"></script>

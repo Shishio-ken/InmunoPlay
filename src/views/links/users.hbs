@@ -1,0 +1,93 @@
+<main class="user-panel" role="main">
+  <h1>Gestión de Usuarios</h1>
+  <p>Administra las cuentas de <strong>profesores</strong> y <strong>estudiantes</strong>.</p>
+
+  <button id="newUserBtn" class="primary-btn">Nuevo usuario</button>
+
+  <div class="user-cards-container">
+    <!-- Profesores -->
+    <div class="user-card-table">
+      <h2>Profesores</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Email</th><th>ROL</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          {{#each profesores}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{nombre}} {{apellido}}</td>
+              <td>{{correo}}</td>
+              <td>{{rol}}</td>
+              <td>
+                <button class="action-btn editUser" data-id="{{id}}">Editar</button>
+                <button class="action-btn deleteUser" data-id="{{id}}">Eliminar</button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Estudiantes -->
+    <div class="user-card-table">
+      <h2>Estudiantes</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Email</th><th>ROL</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          {{#each estudiantes}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{nombre}} {{apellido}}</td>
+              <td>{{correo}}</td>
+              <td>{{rol}}</td>
+              <td>
+                <button class="action-btn editUser" data-id="{{this.id}}">Editar</button>
+                <button class="action-btn deleteUser" data-id="{{this.id}}">Eliminar</button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="userModal" class="user-modal-backdrop">
+    <div class="user-modal-card">
+      <h3 id="modalTitle">Nuevo usuario</h3>
+      <form id="userForm" novalidate>
+        <input type="hidden" id="userId" />
+
+        <label>Nombre
+          <input id="userName" name="nombre" type="text" required autocomplete="off" />
+        </label>
+
+        <label>Apellido
+          <input id="userLastName" name="apellido" type="text" required autocomplete="off" />
+        </label>
+
+        <label>Email
+          <input id="userEmail" name="correo" type="email" required autocomplete="off" />
+        </label>
+
+        <label>Rol
+          <select id="userRole" name="rol" required>
+            <option value="administrador">Profesor</option>
+            <option value="estudiante">Estudiante</option>
+          </select>
+        </label>
+
+        <p id="formError" class="form-error"></p>
+
+        <div class="user-modal-actions">
+          <button type="button" id="cancelBtn" class="primary-btn user-btn-flat">Cancelar</button>
+          <button type="submit" class="primary-btn">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script src="/js/usuarios.js"></script>

@@ -1,0 +1,34 @@
+<main class="game-container" id="gameContainer">
+
+  <!-- Pantalla previa -->
+  <section id="levelSelector" class="game-setup">
+    <h1>¡Bienvenido a ImmunoPlay!</h1>
+    <p>Selecciona un nivel de dificultad para comenzar:</p>
+
+    <form id="levelForm" class="level-selector">
+      <label for="selectedLevel">Nivel de dificultad:</label>
+      <select id="selectedLevel" name="nivel" required>
+        <option value="" disabled selected>Selecciona un nivel</option>
+        <option value="1">🟢 Básico</option>
+        <option value="2">🟡 Intermedio</option>
+        <option value="3">🔴 Avanzado</option>
+      </select>
+
+      <button type="submit" class="primary-btn mt-3">Comenzar Juego</button>
+    </form>
+  </section>
+
+  <!-- Sección del juego -->
+  <section id="gameSection" style="display: none;">
+    <h2 id="level">Nivel: </h2>
+    <p id="timer">Tiempo: 0 s</p>
+    <p id="score">Puntaje: 0</p>
+    <div id="puzzle" class="puzzle-grid"></div>
+    <p id="message"></p>
+    <button id="next-level" class="primary-btn hidden">Siguiente Nivel</button>
+  </section>
+
+</main>
+
+<script src="/js/game.js"></script>
+    

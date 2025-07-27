@@ -1,0 +1,47 @@
+<div class="signup-container">
+  <div class="signup-box">
+    <h2 class="signup-title">Registro de Usuario</h2>
+
+    {{#if message}}
+      <div class="alert alert-danger text-center">{{message}}</div>
+    {{/if}}
+
+    {{#if success}}
+      <div class="alert alert-success text-center">{{success}}</div>
+    {{/if}}
+
+    <form action="/signup" method="POST" id="signupForm">
+      <label for="username">Nombre de usuario</label>
+      <input type="text" name="username" required>
+
+      <label for="nombre">Nombre</label>
+      <input type="text" name="nombre" required>
+
+      <label for="apellido">Apellido</label>
+      <input type="text" name="apellido" required>
+
+      <label for="correo">Correo electrónico</label>
+      <input type="email" name="correo" required>
+
+      <div class="mb-3">
+        <div id="password-strength" class="mt-2">
+          <label for="contraseña">Contraseña</label>
+          <input type="password" name="contraseña" id="contraseña" required>
+          <div id="strength-bar" class="strength-bar"></div>
+          <small id="strength-text" class="text-muted">Introduce una contraseña</small>
+        </div>
+      </div>
+
+      <label for="confirmar">Confirmar contraseña</label>
+      <input type="password" name="confirmar" id="confirmar" required>
+
+      <button type="submit" class="primary-btn w-100">Registrarse</button>
+    </form>
+
+    <p class="signup-footer">
+      ¿Ya tienes cuenta? <a href="/signin">Inicia Sesión</a>
+    </p>
+  </div>
+</div>
+
+<script src="/js/register.js"></script>

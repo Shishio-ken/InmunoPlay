@@ -1,0 +1,27 @@
+<h2 class="my-4 text-center">Preguntas Registradas</h2>
+
+{{#each preguntas}}
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>{{enunciado}}</div>
+            <div>
+                <a href="/links/edit/{{id}}" class="btn btn-sm btn-warning me-1">Editar</a>
+                <a href="/links/delete/{{id}}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar esta pregunta?')">Eliminar</a>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            {{#each opciones}}
+                <li class="list-group-item {{#if es_correcta}}list-group-item-success fw-bold{{/if}}">
+                    {{texto_opcion}}
+                    {{#if es_correcta}}
+                        <span class="badge bg-success float-end">✔ Correcta</span>
+                    {{/if}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{else}}
+    <div class="alert alert-warning text-center">No hay preguntas aún.<br>
+        <a href="/links/add">Crea una pregunta</a>
+    </div>
+{{/each}}
