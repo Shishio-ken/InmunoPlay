@@ -10,7 +10,13 @@
       <h2>Profesores</h2>
       <table class="data-table">
         <thead>
-          <tr><th>ID</th><th>Nombre</th><th>Email</th><th>ROL</th><th>Acciones</th></tr>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>ROL</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
           {{#each profesores}}
@@ -34,7 +40,13 @@
       <h2>Estudiantes</h2>
       <table class="data-table">
         <thead>
-          <tr><th>ID</th><th>Nombre</th><th>Email</th><th>ROL</th><th>Acciones</th></tr>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>ROL</th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
           {{#each estudiantes}}
@@ -44,8 +56,8 @@
               <td>{{correo}}</td>
               <td>{{rol}}</td>
               <td>
-                <button class="action-btn editUser" data-id="{{this.id}}">Editar</button>
-                <button class="action-btn deleteUser" data-id="{{this.id}}">Eliminar</button>
+                <button class="action-btn editUser" data-id="{{id}}">Editar</button>
+                <button class="action-btn deleteUser" data-id="{{id}}">Eliminar</button>
               </td>
             </tr>
           {{/each}}
@@ -54,6 +66,7 @@
     </div>
   </div>
 
+  <!-- Modal de usuario -->
   <div id="userModal" class="user-modal-backdrop">
     <div class="user-modal-card">
       <h3 id="modalTitle">Nuevo usuario</h3>
@@ -74,9 +87,13 @@
 
         <label>Rol
           <select id="userRole" name="rol" required>
-            <option value="administrador">Profesor</option>
+            <option value="administrador">Administrador</option>
             <option value="estudiante">Estudiante</option>
           </select>
+        </label>
+
+        <label>Contraseña
+          <input id="userPassword" name="contraseña" type="password" autocomplete="off" />
         </label>
 
         <p id="formError" class="form-error"></p>

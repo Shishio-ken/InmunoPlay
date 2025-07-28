@@ -1,34 +1,94 @@
-<main class="perfil-container">
-  <section class="perfil-card" aria-label="Perfil de usuario">
-    <img
-      id="perfil-avatar"
-      src="https://i.imgur.com/2Q2XjIG.png"
-      alt="Avatar de usuario"
-      class="perfil-avatar"
-      tabindex="0"
-      title="Haz clic para cambiar el avatar"
-      aria-describedby="avatar-desc"
-    />
-    <input
-      type="file"
-      id="perfil-avatar-input"
-      accept="image/*"
-      style="display: none;"
-      aria-label="Cambiar imagen de avatar"
-    />
+<main class="profile-container">
+  <div class="profile-card">
+    {{!-- Avatar y botón editar --}}
+    <img id="userAvatar" src="{{user.avatar}}" alt="Avatar de {{user.username}}" class="perfil-avatar">
+    <button id="editProfileBtn" class="perfil-avatar-btn">Editar Perfil</button>
 
-    <div style="text-align: center;">
-      <button class="perfil-avatar-btn" onclick="document.getElementById('perfil-avatar-input').click()">Cambiar Avatar</button>
+    {{!-- Controles de tema --}}
+    <div class="profile-theme-controls">
+      <label class="theme-switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+      <span class="theme-label">Modo Oscuro</span>
+
+      <label class="control-colorpicker">
+        <input type="color" id="accentPicker" title="Color de acento">
+        <span class="label-text">Color Acento</span>
+      </label>
+
+      <!-- AQUÍ: el nuevo botón -->
+      <button id="resetColorsBtn" class="reset-btn">Resetear Colores</button>
     </div>
 
-    <p class="perfil-text"><strong>Nombre:</strong> {{nombre}} {{apellido}}</p>
-    <p class="perfil-text"><strong>Username:</strong> {{username}}</p>
-    <p class="perfil-text"><strong>Email:</strong> {{correo}}</p>
-    <p class="perfil-text"><strong>Rol:</strong> {{rol}}</p>
 
+    {{!-- Datos de usuario --}}
+    <p><strong>Nombre:</strong> {{user.nombre}} {{user.apellido}}</p>
+    <p><strong>Username:</strong> {{user.username}}</p>
+    <p><strong>Email:</strong> {{user.correo}}</p>
+    <p><strong>Rol:</strong> {{user.rol}}</p>
 
-    <button class="primary-btn" id="logoutBtn">Cerrar sesión</button>
-  </section>
+    {{!-- Cerrar sesión --}}
+    <a href="/logout" class="primary-btn logout-btn">Cerrar sesión</a>
+  </div>
 </main>
 
+{{!-- Modal de edición de perfil --}}
+<div id="editProfileModal" class="editProfileModal">
+  <div class="modal-card wide">
+    <h3>Editar Perfil</h3>
+    <form id="editProfileForm" enctype="multipart/form-data">
+      {{!-- Avatar --}}
+      <div class="modal-avatar-wrapper">
+        <img id="avatarPreview" src="{{user.avatar}}" alt="Vista previa avatar" class="modal-avatar-preview">
+        <label for="avatarInput">Cambiar avatar</label>
+        <input type="file" name="avatar" id="avatarInput" accept="image/*">
+      </div>
+      {{!-- Grid de campos --}}
+      <div class="modal-content-grid">
+        <div class="modal-row">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" value="{{user.username}}" required>
+        </div>
+        <div class="modal-row">
+          <label for="correo">Email</label>
+          <input type="email" name="correo" id="correo" value="{{user.correo}}" required>
+        </div>
+
+        <div class="modal-row">
+          <label for="nombre">Nombre</label>
+          <input type="text" name="nombre" id="nombre" value="{{user.nombre}}" required>
+        </div>
+        <div class="modal-row">
+          <label for="apellido">Apellido</label>
+          <input type="text" name="apellido" id="apellido" value="{{user.apellido}}" required>
+        </div>
+        <div class="modal-row">
+          <label for="contraseña">Contraseña Nueva</label>
+          <input type="password" name="contraseña" id="contraseña" placeholder="Déjalo vacío para no cambiar">
+        </div>
+        <div class="modal-row">
+          <label for="confirmar">Confirmar Contraseña</label>
+          <input type="password" name="confirmar" id="confirmar" placeholder="Confirma si cambiaste contraseña">
+        </div>
+      </div>
+      {{!-- Botones --}}
+      <div class="modal-actions">
+        <button type="button" id="cancelEditBtn" class="user-btn-flat">Cancelar</button>
+        <button type="submit" class="primary-btn">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal genérico para mensajes -->
+<div id="messageModal" class="message-modal">
+  <div class="message-content">
+    <p id="messageText"></p>
+    <button id="messageCloseBtn">Aceptar</button>
+  </div>
+</div>
+
+{{!-- Carga de scripts --}}
+<script src="/js/theme.js"></script>
 <script src="/js/profile.js"></script>

@@ -1,25 +1,65 @@
-<main>
-    <div class="quiz-app" id="quiz-app">
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        <div id="question-screen">
-            <div class="question-container">
-                <div class="question-number" id="question-number"></div>
-                <div class="question-text" id="question-text"></div>
-                <div class="options-container" id="options-container"></div>
-                <button class="next-btn" id="next-btn" disabled>Siguiente</button>
-                <div class="feedback" id="feedback"></div>
-            </div>
-        </div>
-        <div class="results-container hidden" id="results-screen">
-            <div class="celebration" id="celebration">🎉</div>
-            <h2 class="results-title">¡Test completado!</h2>
-            <div class="score" id="final-score"></div>
-            <p class="results-message" id="results-message"></p>
-            <button class="restart-btn" id="restart-btn">Volver a intentar</button>
-        </div>
+<main class="main-content quiz-container">
+  <h1>Test de Conocimientos</h1>
+  <p>Prueba tu dominio en morfología de leucemias</p>
+
+  <!-- ① Configuración inicial -->
+  <div class="test-config" id="test-config">
+    <label for="testSelect">Elige un test:</label>
+    <select id="testSelect" class="custom-select">
+      <option value="static">Preguntas por defecto</option>
+      <option value="dynamic">Preguntas del profesor</option>
+    </select>
+
+    <!-- ESTE BLOQUE SE OCULTA PARA 'dynamic' -->
+    <div class="num-config" id="count-config">
+      <label for="questionCount">Número de preguntas:</label>
+      <select id="questionCount" class="custom-select">
+        <option>10</option>
+        <option selected>20</option>
+        <option>25</option>
+        <option>30</option>
+        <option>40</option>
+        <option>50</option>
+      </select>
     </div>
+
+    <button id="startQuizBtn" class="primary-btn start-btn">Comenzar Test</button>
+  </div>
+
+  <!-- ② Quiz (oculto hasta “Comenzar Test”) -->
+  <div class="quiz-app hidden" id="quiz-app">
+
+    <!-- Barra de progreso -->
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Pantalla de pregunta -->
+    <section id="question-screen" class="quiz-section question-screen">
+      <div class="question-container">
+        <div class="question-number" id="question-number"></div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options-container" id="options-container"></div>
+        <button class="next-btn" id="next-btn" disabled>Siguiente</button>
+        <div class="feedback" id="feedback"></div>
+      </div>
+    </section>
+
+    <!-- Pantalla de resultados y revisión -->
+    <section id="results-screen" class="quiz-section results-container hidden">
+      <div class="celebration" id="celebration">🎉</div>
+      <h2 class="results-title">¡Test completado!</h2>
+      <div class="score" id="final-score"></div>
+      <p class="results-message" id="results-message"></p>
+
+      <!-- Aquí mostraremos todas las preguntas con tu respuesta y la correcta -->
+      <div id="review-container" class="review-container"></div>
+
+      <button class="restart-btn" id="restart-btn">Volver a intentar</button>
+    </section>
+
+  </div>
 </main>
 
 <script src="/js/quiz.js"></script>
+<br><br><br><br>

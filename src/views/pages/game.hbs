@@ -25,10 +25,19 @@
     <p id="score">Puntaje: 0</p>
     <div id="puzzle" class="puzzle-grid"></div>
     <p id="message"></p>
+    <!-- Contenedor para la info de la imagen resuelta -->
+    <div id="image-info" class="image-info hidden"></div>
     <button id="next-level" class="primary-btn hidden">Siguiente Nivel</button>
   </section>
-
 </main>
+<!-- Modal para mostrar la descripción -->
+<div id="infoModal" class="modal-backdrop">
+  <div class="modal-card">
+    <h3>Descripción de la imagen</h3>
+    <p id="modalText"></p>
+    <button id="modalClose" class="primary-btn">Cerrar</button>
+  </div>
+</div>
 
 <script src="/js/game.js"></script>
-    
+<br>

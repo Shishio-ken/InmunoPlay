@@ -1,50 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ImmunoPlay</title>
   {{!-- Bootstrap 5 --}}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
   {{!-- style --}}
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
   <header class="header">
-    <div class="logo"><a href="/" style="text-decoration: none; color: var(--morado-suave);">ImmunoPlay</a></div>
-    <nav>
-        <a href="/informative">Información</a>
-        <a href="/quiz">Test</a>
-        <a href="/game">Juego</a>
-        <a href="/profile">Perfil</a>
-        <a href="/links/users">Administrar Usuarios</a>
-        <a href="/links/add">Administrar Preguntas</a>
-        {{#if user}}
-            <span>Hola, {{user.username}}</span>
-            <a href="/logout">Cerrar sesión</a>
-        {{else}}
-            <a href="/signin">Iniciar sesión</a>
-        {{/if}}
+    <div class="logo">
+      <a href="/" style="text-decoration: none; color: var(--morado-suave);">
+        ImmunoPlay
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="/informative">Información</a>
+      <a href="/quiz">Test</a>
+      <a href="/game">Juego</a>
+
+      {{#ifEq user.rol "administrador"}}
+      <a href="/links/users">Administrar Usuarios</a>
+      <a href="/links/add">Administrar Preguntas</a>
+      {{/ifEq}}
+
+      {{#if user}}
+      <a href="/profile">Perfil</a>
+      <a href="/logout">Cerrar sesión</a>
+      {{else}}
+      <a href="/signin">Iniciar sesión</a>
+      {{/if}}
     </nav>
   </header>
+  {{!-- … resto de tu HTML de listado/edición de preguntas … --}}
 
-  {{#if message}}
-    <div class="alert alert-danger text-center">
-      {{message}}
-    </div>
-  {{/if}}
-
+  {{!-- MODAL DE FEEDBACK --}}
   {{#if success}}
-    <div class="alert alert-success text-center">
-      {{success}}
+    <div id="feedbackModal" class="modal-backdrop active">
+      <div class="modal-card">
+        <h3 style="color: #4caf50;">¡Éxito!</h3>
+        <p>{{success}}</p>
+        <button id="closeFeedback" class="primary-btn" style="background: #4caf50;">
+          Aceptar
+        </button>
+      </div>
     </div>
   {{/if}}
 
+  {{#if error}}
+    <div id="feedbackModal" class="modal-backdrop active">
+      <div class="modal-card">
+        <h3 style="color: #f44336;">¡Error!</h3>
+        <p>{{error}}</p>
+        <button id="closeFeedback" class="primary-btn" style="background: #f44336;">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  {{/if}}
 
-    {{> message }}
+  {{{ body }}}
 
-    {{{ body }}}
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h4 class="footer-title">PUCE SD</h4>
+        <div class="footer-item">
+          <span class="footer-icon">🌐</span>
+          <span>http://www.pucesd.edu.ec</span>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">📍</span>
+          <span>Av. 12 de Octubre 1076 y Roca. Dirección General Académica, 2do Piso, Edf. Administrativo</span>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">📞</span>
+          <span>Teléfono: (+593) 980859079</span>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">✉️</span>
+          <span>soporte.portas@pucesd.edu.ec</span>
+        </div>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+      <div class="footer-social">
+        <a href="#" class="social-btn facebook">f</a>
+        <a href="#" class="social-btn twitter">🐦</a>
+        <a href="#" class="social-btn instagram">📷</a>
+        <a href="#" class="social-btn whatsapp">💬</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/feedback.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

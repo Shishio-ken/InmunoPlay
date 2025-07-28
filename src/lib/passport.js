@@ -1,78 +1,102 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const pool = require('../database');
-const bcrypt = require('bcryptjs');
+const helpers = require('./herlpers');
 
-// Estrategia de registro
+const ADMIN_KEY = 'SISTEMAS'; // Cambia por tu clave única de administrador
+
+// ===================== Estrategia de Registro =====================
 passport.use('local.signup', new LocalStrategy({
-  usernameField: 'username',       // campo en tu formulario
-  passwordField: 'contraseña',     // campo en tu formulario
-  passReqToCallback: true
-}, async (req, username, password, done) => {
-  const { nombre, apellido, correo } = req.body;
+  usernameField: 'username',        // Nombre del campo en el formulario
+  passwordField: 'contraseña',      // Nombre del campo en el formulario
+  passReqToCallback: true           // Permite acceder a req.body
+}, async (req, username, contraseña, done) => {
+  const { nombre, apellido, correo, confirmar, isAdmin, adminKey } = req.body;
 
   try {
-    // Verificar si existe
+    // Verificar si el usuario ya existe
     const rows = await pool.query('SELECT * FROM usuarios WHERE username = ?', [username]);
     if (rows.length > 0) {
       return done(null, false, req.flash('message', 'El usuario ya existe.'));
     }
 
-    // Crear usuario
-    const nuevoUsuario = {
+    // Verificar si las contraseñas coinciden
+    if (contraseña !== confirmar) {
+      return done(null, false, req.flash('message', 'Las contraseñas no coinciden.'));
+    }
+
+    // Determinar el rol
+    let rol = 'estudiante';
+    if (isAdmin) {
+      if (adminKey === ADMIN_KEY) {
+        rol = 'administrador';
+      } else {
+        return done(null, false, req.flash('message', 'Clave de administrador incorrecta.'));
+      }
+    }
+
+    // Crear nuevo usuario con contraseña encriptada
+    const newUser = {
       username,
       nombre,
       apellido,
       correo,
-      contraseña: await bcrypt.hash(password, 10)
+      contraseña: await helpers.encryptPassword(contraseña),
+      rol
     };
 
-    const result = await pool.query('INSERT INTO usuarios SET ?', [nuevoUsuario]);
-    nuevoUsuario.id = result.insertId;
+    const result = await pool.query('INSERT INTO usuarios SET ?', [newUser]);
+    newUser.id = result.insertId;
 
-    return done(null, nuevoUsuario);
-  } catch (err) {
-    return done(err);
+    return done(null, newUser);
+  } catch (error) {
+    console.error('Error en registro:', error);
+    return done(error);
   }
 }));
 
-// Estrategia de inicio de sesión
+// ===================== Estrategia de Inicio de Sesión =====================
 passport.use('local.signin', new LocalStrategy({
   usernameField: 'username',
   passwordField: 'contraseña',
   passReqToCallback: true
-}, async (req, username, password, done) => {
+}, async (req, username, contraseña, done) => {
   try {
+    // Buscar usuario
     const rows = await pool.query('SELECT * FROM usuarios WHERE username = ?', [username]);
     if (rows.length === 0) {
-      return done(null, false, req.flash('message', 'El usuario no existe.'));
+      return done(null, false, req.flash('message', 'Usuario no encontrado.'));
     }
 
     const user = rows[0];
-    const validPassword = await bcrypt.compare(password, user.contraseña);
 
-    if (validPassword) {
-      return done(null, user);
-    } else {
+    // Validar contraseña
+    const validPassword = await helpers.matchPassword(contraseña, user.contraseña);
+    if (!validPassword) {
       return done(null, false, req.flash('message', 'Contraseña incorrecta.'));
     }
-  } catch (err) {
-    return done(err);
+
+    return done(null, user, req.flash('success', 'Bienvenido ' + user.username));
+  } catch (error) {
+    console.error('Error en inicio de sesión:', error);
+    return done(error);
   }
 }));
 
-// Serializar usuario
+// ===================== Serialización =====================
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserializar usuario
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT * FROM usuarios WHERE id = ?', [id]);
-  if (rows.length > 0) {
-    done(null, rows[0]); // Esto está perfecto
-  } else {
-    done(null, false);
+  try {
+    const rows = await pool.query('SELECT * FROM usuarios WHERE id = ?', [id]);
+    if (rows.length > 0) {
+      done(null, rows[0]);
+    } else {
+      done(null, false);
+    }
+  } catch (error) {
+    done(error);
   }
 });
-

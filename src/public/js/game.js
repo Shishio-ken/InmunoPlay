@@ -1,20 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ————— Referencias DOM —————
   const puzzleContainer = document.getElementById('puzzle');
-  const message = document.getElementById('message');
-  const timerEl = document.getElementById('timer');
-  const scoreEl = document.getElementById('score');
-  const levelEl = document.getElementById('level');
-  const nextLevelBtn = document.getElementById('next-level');
+  const messageEl       = document.getElementById('message');
+  const timerEl         = document.getElementById('timer');
+  const scoreEl         = document.getElementById('score');
+  const levelEl         = document.getElementById('level');
+  const nextLevelBtn    = document.getElementById('next-level');
 
-  const levelForm = document.getElementById('levelForm');
-  const levelSelector = document.getElementById('levelSelector');
-  const gameSection = document.getElementById('gameSection');
+  const modalBackdrop   = document.getElementById('infoModal');
+  const modalText       = document.getElementById('modalText');
+  const modalClose      = document.getElementById('modalClose');
 
-  let level = 1;
-  let timer = 0;
-  let score = 0;
-  let interval;
+  const levelForm       = document.getElementById('levelForm');
+  const levelSelector   = document.getElementById('levelSelector');
+  const gameSection     = document.getElementById('gameSection');
 
+  // ————— Estado —————
+  let level          = 1;
+  let timer          = 0;
+  let score          = 0;
+  let interval       = null;
+  let availableImages;
+  let currentImage   = null;
+  let selectedPiece  = null; // para móvil
+  let dragSrc        = null; // para desktop
+
+  // ————— Datos de imágenes y sus descripciones oficiales —————
   const allImages = [
     '/imagenes/recursos/leul1.png',
     '/imagenes/recursos/leul2.png',
@@ -23,80 +34,107 @@ document.addEventListener('DOMContentLoaded', () => {
     '/imagenes/recursos/leul5.png',
     '/imagenes/recursos/leul6.png'
   ];
+  availableImages = [...allImages];
 
-  let availableImages = [...allImages];
+  const imageInfo = {
+    '/imagenes/recursos/leul1.png': 'Leucemia linfoblástica aguda L1. Linfoblastos pequeños, poseen escaso citoplasma basófilo sin gránulos; el núcleo ocupa la mayor parte de la superficie y la cromatina es laxa gruesa, no denotan tan facilmente sus nucléolos debido al tamaño de la célula en ocasiones en las células de mayor tamaño pueden ser visibles sus nucleolos. Los linfoblastos pueden llegar a presentar la forma de raqueta o "espejos de mano". Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.',
+    '/imagenes/recursos/leul2.png': 'Leucemia linfoblástica aguda L1. Linfoblastos de tamaño pequeño homogéneo, escaso citoplasma basófilo, cromatina laxa gruesa, algunos presentan forma de raqueta o de espejo de mano. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.',
+    '/imagenes/recursos/leul3.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea: linfoblastos de tamaño pequeño, escasos de tamaño medio, las mas grandes pueden envidenciar nucleolos (A) y una cromatina más fina. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.',
+    '/imagenes/recursos/leul4.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea en tamaño. Linfoblastos con aspecto de raqueta o “espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.',
+    '/imagenes/recursos/leul5.png': 'Leucemia linfoblástica aguda L1. Linfoblastos con aspecto de raqueta o “espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×',
+    '/imagenes/recursos/leul6.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea en tamaño. Linfoblastos con aspecto de raqueta o“espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.'
+    // …añade todas las que necesites
+  };
 
-  levelForm.addEventListener('submit', function (e) {
+  // ————— Selección de nivel —————
+  levelForm.addEventListener('submit', e => {
     e.preventDefault();
-    const selected = document.getElementById('selectedLevel').value;
-    if (!selected) return alert('Selecciona un nivel válido');
-
-    level = parseInt(selected);
+    const sel = document.getElementById('selectedLevel').value;
+    if (!sel) return alert('Selecciona un nivel válido');
+    level = parseInt(sel, 10);
     levelEl.textContent = `Nivel: ${level}`;
     levelSelector.style.display = 'none';
-    gameSection.style.display = 'block';
-
+    gameSection.style.display   = 'block';
     initPuzzle(level);
   });
 
+  // ————— Inicializar puzzle —————
   function initPuzzle(level) {
     puzzleContainer.innerHTML = '';
-    message.textContent = '';
+    messageEl.textContent     = '';
     nextLevelBtn.classList.add('hidden');
+    selectedPiece = null;
+    dragSrc       = null;
+    modalBackdrop.classList.remove('active');
 
-    const gridSize = level === 1 ? 3 : level === 2 ? 4 : 5;
+    const gridSize   = level === 1 ? 3 : level === 2 ? 4 : 5;
     const totalPieces = gridSize * gridSize;
-    const pieceSize = 450 / gridSize;
-
+    const pieceSize  = 450 / gridSize;
     puzzleContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${pieceSize}px)`;
 
-    if (availableImages.length === 0) {
-      availableImages = [...allImages];
-    }
-
+    if (availableImages.length === 0) availableImages = [...allImages];
     const imgIndex = Math.floor(Math.random() * availableImages.length);
-    const bgImage = availableImages.splice(imgIndex, 1)[0];
+    currentImage   = availableImages.splice(imgIndex, 1)[0];
 
-    const correctOrder = Array.from({ length: totalPieces }, (_, i) => i);
+    const correctOrder  = Array.from({ length: totalPieces }, (_, i) => i);
     const shuffledOrder = correctOrder.slice().sort(() => Math.random() - 0.5);
 
     shuffledOrder.forEach(pos => {
       const piece = document.createElement('div');
-      piece.className = 'piece';
-      piece.draggable = true;
+      piece.className        = 'piece';
+      piece.draggable        = true;
       piece.dataset.position = pos;
-
       const x = -(pos % gridSize) * pieceSize;
       const y = -Math.floor(pos / gridSize) * pieceSize;
-      piece.style.width = `${pieceSize}px`;
-      piece.style.height = `${pieceSize}px`;
-      piece.style.backgroundImage = `url('${bgImage}')`;
-      piece.style.backgroundPosition = `${x}px ${y}px`;
+      piece.style.width               = `${pieceSize}px`;
+      piece.style.height              = `${pieceSize}px`;
+      piece.style.backgroundImage     = `url('${currentImage}')`;
+      piece.style.backgroundPosition  = `${x}px ${y}px`;
+
+      // — Drag & Drop (desktop) —
+      piece.addEventListener('dragstart', () => dragSrc = piece);
+      piece.addEventListener('dragover', e => e.preventDefault());
+      piece.addEventListener('drop', () => {
+        swapPieces(dragSrc, piece);
+      });
+
+      // — Click / Tap para móvil y click desktop —
+      piece.addEventListener('click', () => {
+        if (!selectedPiece) {
+          selectedPiece = piece;
+          piece.classList.add('selected');
+        } else if (selectedPiece === piece) {
+          // cancelar selección
+          piece.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          swapPieces(selectedPiece, piece);
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        }
+      });
+
+      // — Touch para móvil —
+      piece.addEventListener('touchstart', e => {
+        // evitamos el ghost click
+        e.preventDefault();
+        if (!selectedPiece) {
+          selectedPiece = piece;
+          piece.classList.add('selected');
+        } else if (selectedPiece === piece) {
+          piece.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          swapPieces(selectedPiece, piece);
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        }
+      });
 
       puzzleContainer.appendChild(piece);
     });
 
-    let dragSrc = null;
-    const pieces = document.querySelectorAll('.piece');
-    pieces.forEach(piece => {
-      piece.addEventListener('dragstart', () => dragSrc = piece);
-      piece.addEventListener('dragover', e => e.preventDefault());
-      piece.addEventListener('drop', function () {
-        if (dragSrc === this) return;
-        const srcPos = dragSrc.dataset.position;
-        const targetPos = this.dataset.position;
-        const srcBg = dragSrc.style.backgroundPosition;
-        const targetBg = this.style.backgroundPosition;
-
-        dragSrc.dataset.position = targetPos;
-        dragSrc.style.backgroundPosition = targetBg;
-        this.dataset.position = srcPos;
-        this.style.backgroundPosition = srcBg;
-
-        checkWin();
-      });
-    });
-
+    // — Timer —
     clearInterval(interval);
     timer = 0;
     timerEl.textContent = 'Tiempo: 0 s';
@@ -106,24 +144,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  function checkWin() {
-    const currentOrder = Array.from(document.querySelectorAll('.piece'))
-      .map(p => parseInt(p.dataset.position));
-    const gridSize = level === 1 ? 3 : level === 2 ? 4 : 5;
-    const correctOrder = Array.from({ length: gridSize * gridSize }, (_, i) => i);
+  // ————— Intercambiar dos piezas —————
+  function swapPieces(a, b) {
+    if (!a || !b || a === b) return;
+    const posA = a.dataset.position;
+    const posB = b.dataset.position;
+    const bgA  = a.style.backgroundPosition;
+    const bgB  = b.style.backgroundPosition;
 
-    if (currentOrder.every((v, i) => v === correctOrder[i])) {
+    a.dataset.position        = posB;
+    a.style.backgroundPosition = bgB;
+    b.dataset.position        = posA;
+    b.style.backgroundPosition = bgA;
+
+    checkWin();
+  }
+
+  // ————— Comprobar victoria —————
+  function checkWin() {
+    const pieces  = Array.from(document.querySelectorAll('.piece'));
+    const current = pieces.map(p => parseInt(p.dataset.position, 10));
+    const gridSize= level === 1 ? 3 : level === 2 ? 4 : 5;
+    const correct = Array.from({ length: gridSize*gridSize }, (_, i) => i);
+    if (current.every((v,i) => v === correct[i])) {
       clearInterval(interval);
-      let pointsEarned = Math.max(100 - timer * 2, 10);
-      score += pointsEarned;
-      scoreEl.textContent = `Puntaje: ${score}`;
-      message.textContent = `¡Bien hecho! Completado en ${timer} s (+${pointsEarned} puntos).`;
+      const points = Math.max(100 - timer*2, 10);
+      score += points;
+      scoreEl.textContent  = `Puntaje: ${score}`;
+      messageEl.textContent= `¡Bien hecho! Completado en ${timer} s (+${points} pts).`;
+
+      // — Abrir modal con la info oficial —
+      modalText.textContent = imageInfo[currentImage] || 'Información no disponible.';
+      modalBackdrop.classList.add('active');
+
       nextLevelBtn.classList.remove('hidden');
-    } else {
-      message.textContent = '';
     }
   }
 
+  // ————— Cerrar modal —————
+  modalClose.addEventListener('click', () => {
+    modalBackdrop.classList.remove('active');
+  });
+  modalBackdrop.addEventListener('click', e => {
+    if (e.target === modalBackdrop) {
+      modalBackdrop.classList.remove('active');
+    }
+  });
+
+  // ————— Siguiente nivel —————
   nextLevelBtn.addEventListener('click', () => {
     level++;
     levelEl.textContent = `Nivel: ${level}`;

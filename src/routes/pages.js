@@ -1,17 +1,57 @@
 const express = require('express');
 const router = express.Router();
+const pool = require('../database');
 const { isLoggedIn } = require('../middlewares/auth');
 
+router.get('/quiz', isLoggedIn, async (req, res) => {
+  // 1) Trae y da forma a dynamicQuestions desde tu BD
+  const rawPreg = await pool.query('SELECT * FROM preguntas');
+  const dynamicQuestions = [];
+  for (let p of rawPreg) {
+    const opts = await pool.query(
+      'SELECT texto_opcion, es_correcta, retroalimentacion FROM opciones WHERE id_pregunta = ?',
+      [p.id]
+    );
+    dynamicQuestions.push({
+      question: p.enunciado,
+      options: opts.map(o => o.texto_opcion),
+      correctAnswer: opts.findIndex(o => o.es_correcta),
+      feedbacks: opts.map(o => o.retroalimentacion)
+    });
+  }
+  res.render('pages/quiz', { dynamicQuestions });
+});
+
+// Servir el JS con las preguntas dinámicas
+router.get('/js/dynamicQuestions.js', isLoggedIn, async (req, res) => {
+  // Obtén dinámicas igual que en /quiz (o reutiliza)
+  // Por brevedad, asumimos ya tienes dynamicQuestions en memoria:
+  // Aquí por simplicidad vamos a recargar:
+  const rawPreg = await pool.query('SELECT * FROM preguntas');
+  const arr = [];
+  for (let p of rawPreg) {
+    const opts = await pool.query('SELECT texto_opcion, es_correcta, retroalimentacion FROM opciones WHERE id_pregunta = ?', [p.id]);
+    arr.push({
+      question: p.enunciado,
+      options: opts.map(o => o.texto_opcion),
+      correctAnswer: opts.findIndex(o => o.es_correcta),
+      feedbacks: opts.map(o => o.retroalimentacion)
+    });
+  }
+  res.type('application/javascript')
+     .send(`window.dynamicQuestions = ${JSON.stringify(arr)};`);
+});
+
 // Páginas informativas
-router.get('/informative', (req, res) => {
+router.get('/informative', isLoggedIn, (req, res) => {
   res.render('pages/informative', { title: 'Información sobre Leucemia' });
 });
 
-router.get('/game', (req, res) => {
+router.get('/game', isLoggedIn, (req, res) => {
   res.render('pages/game', { title: 'Juego Educativo' });
 });
 
-router.get('/quiz', (req, res) => {
+router.get('/quiz', isLoggedIn, (req, res) => {
   res.render('pages/quiz', { title: 'Quiz' });
 });
 

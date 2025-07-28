@@ -5,7 +5,16 @@ const helpers = {};
 // Suma 1 al índice
 helpers.inc = (value) => parseInt(value) + 1;
 
-// Si tienes otros helpers:
+// Fecha formateada
 helpers.timeago = (timestamp) => format(timestamp);
+
+// NUEVO: helper de comparación como bloque
+helpers.ifEq = function(a, b, options) {
+  if (a === b) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+};
+
 
 module.exports = helpers;

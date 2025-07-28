@@ -35,6 +35,18 @@
       <label for="confirmar">Confirmar contraseña</label>
       <input type="password" name="confirmar" id="confirmar" required>
 
+      <!-- Nuevo: Registro como administrador -->
+      <div class="admin-option">
+       
+        <input type="checkbox" id="isAdmin" name="isAdmin">
+        <label for="isAdmin">¿Registrar como Administrador?</label>
+      </div>
+
+      <div id="adminKeyField" style="display:none;">
+        <label for="adminKey">Clave única de administrador</label>
+        <input type="password" id="adminKey" name="adminKey">
+      </div>
+
       <button type="submit" class="primary-btn w-100">Registrarse</button>
     </form>
 
@@ -43,5 +55,15 @@
     </p>
   </div>
 </div>
+<br><br>
 
+<!-- Modal genérico para mensajes de Login/Signup -->
+<div id="messageModal" class="message-modal">
+  <div class="message-content">
+    <p id="messageText"></p>
+    <button id="messageCloseBtn">Aceptar</button>
+  </div>
+</div>
+
+<script src="/js/auth.js"></script>
 <script src="/js/register.js"></script>

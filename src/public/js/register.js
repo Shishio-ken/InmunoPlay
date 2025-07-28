@@ -4,7 +4,13 @@
   const strengthBar = document.getElementById('strength-bar');
   const strengthText = document.getElementById('strength-text');
   const form = document.getElementById('signupForm');
+  const isAdminCheckbox = document.getElementById('isAdmin');
+  const adminKeyField = document.getElementById('adminKeyField');
 
+  isAdminCheckbox.addEventListener('change', () => {
+    adminKeyField.style.display = isAdminCheckbox.checked ? 'block' : 'none';
+  });
+  
   function evaluarFortaleza(pass) {
     let score = 0;
     if (pass.length >= 6) score++;

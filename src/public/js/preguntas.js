@@ -1,25 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-  console.log("Script externo cargado");
+document.addEventListener('DOMContentLoaded', () => {
+  const cantidadSelect     = document.getElementById('cantidad');
+  const opcionesContainer  = document.getElementById('opcionesContainer');
 
-  const cantidad = document.getElementById('cantidad');
-  const contenedor = document.getElementById('opcionesContainer');
+  cantidadSelect.addEventListener('change', () => {
+    opcionesContainer.innerHTML = '';
+    const n = parseInt(cantidadSelect.value);
+    for (let i = 1; i <= n; i++) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'form-group mb-4';
+      wrapper.innerHTML = `
+        <label for="opcion${i}">Opción ${i}:</label>
+        <input type="text"
+               class="form-control"
+               name="opcion${i}"
+               id="opcion${i}"
+               placeholder="Texto de la opción ${i}"
+               required>
 
-  cantidad.addEventListener('change', () => {
-    console.log("Cambio detectado");
-    contenedor.innerHTML = '';
-    const num = parseInt(cantidad.value);
-
-    for (let i = 1; i <= num; i++) {
-      contenedor.innerHTML += `
-        <div class="form-group mb-3">
-          <label>Opción ${i}</label>
-          <input type="text" class="form-control" name="opciones[]" placeholder="Texto de la opción ${i}" required>
-          <div class="form-check mt-1">
-            <input class="form-check-input" type="radio" name="opcion_correcta" value="${i - 1}" required>
-            <label class="form-check-label">Esta es la correcta</label>
-          </div>
+        <div class="form-check mt-2">
+          <input class="form-check-input"
+                 type="radio"
+                 name="correcta"
+                 id="correcta${i}"
+                 value="${i}"
+                 required>
+          <label class="form-check-label" for="correcta${i}">
+            Marcar como correcta
+          </label>
         </div>
+
+        <label for="feedback${i}" class="mt-2">Retroalimentación ${i}:</label>
+        <textarea class="form-control feedback-textarea"
+                  name="feedback${i}"
+                  id="feedback${i}"
+                  placeholder="Explica por qué esta opción está bien o mal"
+                  required></textarea>
       `;
+      opcionesContainer.appendChild(wrapper);
     }
   });
 });

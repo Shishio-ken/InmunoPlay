@@ -1,34 +1,117 @@
 <main class="main-content">
-  <section class="hero">
-    <h1 class="hero-title">Bienvenido a <span class="highlight">ImmunoPlay</span></h1>
-    <p class="hero-subtitle">La plataforma educativa para aprender y jugar con propósito.</p>
 
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="hero-title">
+      Bienvenido{{#if user}}, {{user.username}}{{/if}} a <span class="highlight">ImmunoPlay</span>
+    </h1>
+    <p class="hero-subtitle">La plataforma educativa para aprender y jugar con propósito.</p>
     {{#unless user}}
-      <a href="/signin" class="primary-btn">Comienza ahora</a>
+    <a href="/signin" class="primary-btn">Comienza ahora</a>
     {{/unless}}
   </section>
 
+  <!-- FEATURES -->
   <section class="features">
     <div class="feature-box">
       <h2>📘 Módulo Informativo</h2>
-      <p>Accede a explicaciones claras y visuales sobre conceptos relacionados con leucemias y diagnóstico morfológico. Ideal para estudiantes y profesionales en formación.</p>
+      <p>Explicaciones claras y visuales sobre conceptos de leucemias y diagnóstico morfológico.</p>
     </div>
-
     <div class="feature-box">
       <h2>🧪 Test de Conocimientos</h2>
-      <p>Evalúa tus conocimientos con preguntas diseñadas para reforzar el aprendizaje. Obtén retroalimentación inmediata y mejora tus resultados.</p>
+      <p>Preguntas diseñadas para reforzar tu aprendizaje con retroalimentación inmediata.</p>
     </div>
-
     <div class="feature-box">
       <h2>🎮 Juego Educativo</h2>
-      <p>Aprender nunca fue tan divertido. Explora nuestro juego interactivo y reta tus habilidades mientras estudias.</p>
+      <p>Juego interactivo que reta tus habilidades mientras estudias de forma divertida.</p>
     </div>
-
-    {{#if user}}
-    <div class="feature-box">
-      <h2>🛠️ Herramientas para Administradores</h2>
-      <p>Accede a la gestión de usuarios y preguntas, mantén el sistema actualizado y adaptado a las necesidades de aprendizaje.</p>
-    </div>
-    {{/if}}
   </section>
+
+  <!-- STATISTICS -->
+  <section class="stats-section">
+    <div class="stat">
+      <strong>1,000+</strong>
+      <span>Usuarios Activos</span>
+    </div>
+    <div class="stat">
+      <strong>200+</strong>
+      <span>Preguntas</span>
+    </div>
+    <div class="stat">
+      <strong>50+</strong>
+      <span>Recursos Histológicos</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <h2>Cómo Funciona</h2>
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-icon">1️⃣</div>
+        <h3>Explora el Contenido</h3>
+        <p>Lee nuestros módulos informativos para entender la morfología celular.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">2️⃣</div>
+        <h3>Practica con Tests</h3>
+        <p>Contesta preguntas y recibe retroalimentación al instante.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">3️⃣</div>
+        <h3>Juega y Refuerza</h3>
+        <p>Consolida tu conocimiento a través del juego educativo interactivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <h2>Lo que dicen nuestros usuarios</h2>
+    <div class="testimonial-cards">
+      <blockquote class="testimonial">
+        <p>"ImmunoPlay ha transformado mi forma de estudiar morfología celular. ¡Muy recomendado!"</p>
+        <footer>– María López, Estudiante de Biomedicina</footer>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>"Los tests y el juego me ayudaron a prepararme para mis exámenes prácticos."</p>
+        <footer>– Carlos Pérez, Técnico de Laboratorio</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Preguntas Frecuentes</h2>
+    <div class="faq-item">
+      <button class="faq-question">¿En donde puedo poder modo oscuro?</button>
+      <div class="faq-answer">
+        <p>Puedes poner modo oscuro en tu perfil, justo debajo de tu foto de perfil.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">¿Cómo cambio mi contraseña?</button>
+      <div class="faq-answer">
+        <p>Ve a tu perfil, haz clic en 'Cambiar contraseña' y sigue los pasos indicados.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">¿Hay certificado al completar tests?</button>
+      <div class="faq-answer">
+        <p>Próximamente añadiremos un sistema de certificados digitales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION BANNER -->
+  <section class="cta-banner">
+    <h2>¿Listo para comenzar?</h2>
+    <p>Únete a nuestra comunidad y lleva tu aprendizaje al siguiente nivel.</p>
+    {{#unless user}}
+      <a href="/signup" class="primary-btn">Regístrate Gratis</a>
+    {{/unless}}
+  </section>
+
 </main>
+
+<script src="/js/index.js"></script>

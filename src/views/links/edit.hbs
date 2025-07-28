@@ -7,8 +7,8 @@
       <!-- Enunciado -->
       <div class="form-group mb-3">
         <label for="enunciado">Pregunta:</label>
-        <input 
-          type="text" 
+        <input
+          type="text"
           class="form-control"
           name="enunciado"
           placeholder="Escribe la pregunta"
@@ -19,23 +19,36 @@
       <!-- Opciones -->
       <div id="opcionesContainer">
         {{#each opciones}}
-          <div class="form-group mb-3">
+          <div class="form-group mb-4">
             <label>Opción {{inc @index}}:</label>
-            <input 
+            <input
               type="text"
-              class="form-control"
+              class="form-control mb-2"
               name="opciones[]"
               value="{{texto_opcion}}"
               required>
-            <div class="form-check mt-1">
-              <input 
+            
+            <div class="form-check mb-2">
+              <input
                 class="form-check-input"
                 type="radio"
                 name="opcion_correcta"
                 value="{{@index}}"
+                id="correcta-{{@index}}"
                 {{#if es_correcta}}checked{{/if}}>
-              <label class="form-check-label">Esta es la correcta</label>
+              <label class="form-check-label" for="correcta-{{@index}}">
+                Esta es la correcta
+              </label>
             </div>
+
+            <!-- NUEVO campo de retroalimentación -->
+            <label for="retro-{{@index}}" class="form-label">Retroalimentación:</label>
+            <textarea
+              id="retro-{{@index}}"
+              class="form-control"
+              name="retroalimentaciones[]"
+              rows="2"
+              placeholder="Escribe aquí la retroalimentación para esta opción (opcional)">{{retroalimentacion}}</textarea>
           </div>
         {{/each}}
       </div>

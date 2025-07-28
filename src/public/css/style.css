@@ -1,5 +1,5 @@
 :root {
-  --morado-suave: #7a5fa2;
+  --accent: #7a5fa2;
   --morado-intenso: #6a4a91;
   --lila-pastel: #d9d3f0;
   --beige-claro: #f3eee7;
@@ -43,7 +43,7 @@ body {
 .logo {
   font-size: 1.8rem;
   font-weight: bold;
-  color: var(--morado-suave);
+  color: var(--accent)
 }
 
 .header nav {
@@ -53,7 +53,7 @@ body {
 }
 
 .header nav a {
-  color: var(--morado-suave);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -77,7 +77,7 @@ body {
 
 .main-content h1 {
   font-size: 2.4rem;
-  color: var(--morado-intenso);
+  color: var(--accent);
   margin-bottom: 2rem;
   font-weight: bold;
 }
@@ -89,7 +89,7 @@ body {
 
 /* Botón primario */
 .primary-btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 1rem 2.5rem;
@@ -104,7 +104,7 @@ body {
 }
 
 .primary-btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
@@ -119,7 +119,7 @@ body {
 
 .info-box h2 {
   font-size: 1.5rem;
-  color: var(--morado-intenso);
+  color: var(--accent);
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -145,7 +145,7 @@ body {
 
 .data-table th {
   background: var(--lila-pastel);
-  color: var(--morado-intenso);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -156,8 +156,8 @@ body {
 /* Botón de acción */
 .action-btn {
   background: transparent;
-  border: 2px solid var(--morado-suave);
-  color: var(--morado-suave);
+  border: 2px solid var(--accent);
+  color: var(--accent);
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.95rem;
@@ -167,80 +167,83 @@ body {
 }
 
 .action-btn:hover {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
 }
 
 /* Cards - Linfoides */
+/* Contenedor de tarjetas con grid para filas uniformes */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
+  justify-items: center;
+  padding: 0;
 }
 
+/* Tarjeta fija en ancho y alto, con comportamiento flex interno */
 .card {
-  position: relative;
   width: 260px;
-  height: auto;
-  color: #fff;
-  cursor: pointer;
+  height: 260px;
+  position: relative;
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: transform 0.4s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--morado-suave);
-  padding: 1rem;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.3s ease;
+  background: var(--accent);
 }
 
 .card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 }
 
+/* Capa semitransparente (se conserva igual) */
 .card span {
   position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  bottom: 4px;
+  top: 4px; left: 4px; right: 4px; bottom: 4px;
   background-color: rgba(0,0,0,0.4);
-  z-index: 2;
   border-radius: 10px;
+  z-index: 2;
 }
 
+/* Contenido coloca imagen y texto ocupando todo el alto */
 .card .content {
-  position: relative;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   z-index: 10;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-weight: 600;
+  padding: 1rem;
   text-align: center;
 }
 
+/* Imagen con tamaño fijo y object-fit para recortar uniformemente */
 .card .content img {
-  max-width: 250px;
-  height: auto;
-  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
   border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
 
+/* Texto centrado en la parte inferior */
 .card .content p {
-  font-size: 0.95rem;
-  color: white;
   margin: 0;
+  padding: 0.5rem 0;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
+
 
 .back-button {
   position: absolute;
   top: 110px;
   right: 30px;
-  background-color: var(--morado-suave);
+  background-color: var(--accent);
   color: white;
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
@@ -253,63 +256,125 @@ body {
 }
 
 .back-button:hover {
-  background-color: var(--morado-intenso);
+  background-color: var(--accent);
   transform: scale(1.05);
 }
 
 /* Carrusel de imágenes */
+/* ==========================
+   CARROUSEL GENERAL
+   ========================== */
 .carousel-container {
-  position: relative;
-  overflow: hidden;
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem; /* Espacio visual limpio entre imagen + descripción + botones */
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease;
-  will-change: transform;
-  width: 100%;
-}
-
-.bloque {
-  min-width: 100%;
-  box-sizing: border-box;
-  display: flex; 
-  flex-direction: column;
-  align-items: center;
-}
-
-.bloque img {
-  width: 90%;
-  max-width: 600px;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: var(--blanco);
+  border: 2px solid var(--accent);
   border-radius: 12px;
   box-shadow: var(--sombra-suave);
-  cursor: pointer;
-  margin-bottom: 1rem;
+  overflow: hidden;
 }
 
-.bloque p {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--gris-texto);
-}
-
-/* Controles del carrusel */
-.carousel-controls {
+.carousel-container .carousel-track {
   display: flex;
+  width: 100%;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.carousel-container .bloque {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.carousel-container .bloque img {
+  width: 100%;
+  max-width: 600px;
+  height: 360px;               /* altura fija para todas */
+  object-fit: cover;           /* recorta y mantiene proporción */
+  border-radius: 10px;
+  box-shadow: var(--sombra-suave);
+}
+
+.carousel-container .bloque p {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--gris-texto);
+  max-width: 700px;
+  margin: 0;
+}
+
+.carousel-container .carousel-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.carousel-container .carousel-controls .btn {
+  background: var(--accent);
+  color: var(--blanco);
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.carousel-container .carousel-controls .btn:hover {
+  background: var(--accent);
+  transform: scale(1.05);
+}
+
+.carousel-container .carousel-controls .counter {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+/* Modal de imagen ampliada */
+#modalImagen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
-  margin-top: 0.5rem; /* Reduce el espacio vertical */
-  padding-bottom: 2rem; /* Opcional: para que no quede tan pegado al borde inferior */
+  z-index: 9999;
 }
 
+#modalImagen img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 0.5rem;
+  }
+  .carousel-container .bloque img {
+    height: 240px;
+  }
+  .carousel-container .carousel-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+
 .btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: white;
   border: none;
   padding: 0.7rem 1.5rem;
@@ -320,13 +385,13 @@ body {
 }
 
 .btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
 .counter {
   font-weight: bold;
-  color: var(--morado-intenso);
+  color: var(--accent);
   font-size: 1rem;
 }
 
@@ -371,7 +436,7 @@ body {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--morado-suave), var(--morado-intenso), var(--lila-pastel));
+  background: linear-gradient(90deg, var(--accent), var(--accent), var(--lila-pastel));
   width: 0%;
   transition: width 0.3s ease;
   border-radius: 0 4px 4px 0;
@@ -382,7 +447,7 @@ body {
 }
 
 .question-number {
-  color: var(--morado-suave);
+  color: var(--accent);
   font-size: 1rem;
   margin-bottom: 0.5rem;
   font-weight: bold;
@@ -400,7 +465,7 @@ body {
 }
 
 .option {
-  display: block;
+  display: flex;
   padding: 1rem;
   margin-bottom: 0.8rem;
   background-color: rgba(255, 255, 255, 0.2);
@@ -416,7 +481,7 @@ body {
 }
 
 .option.selected {
-  border-color: var(--morado-suave);
+  border-color: var(--accent);
   background-color: rgba(122, 95, 162, 0.15);
 }
 
@@ -431,7 +496,7 @@ body {
 }
 
 .next-btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 1rem 2rem;
@@ -448,7 +513,7 @@ body {
 }
 
 .next-btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
@@ -487,7 +552,7 @@ body {
 .results-title {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: var(--morado-suave);
+  color: var(--accent);
   font-weight: bold;
 }
 
@@ -495,7 +560,7 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   margin: 1rem 0;
-  background: linear-gradient(135deg, var(--morado-suave), var(--morado-intenso));
+  background: linear-gradient(135deg, var(--accent), var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -509,7 +574,7 @@ body {
 }
 
 .restart-btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 1rem 2rem;
@@ -523,7 +588,7 @@ body {
 }
 
 .restart-btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
@@ -547,7 +612,7 @@ h1 {
   font-size: 2.2rem;
   margin-bottom: 2rem;
   font-weight: bold;
-  color: var(--morado-suave);
+  color: var(--accent);
   text-align: center;
   max-width: 1000px;
   margin: auto;
@@ -565,7 +630,7 @@ h1 {
   gap: 2px;
   margin: 0 auto;
   max-width: 460px;
-  border: 2px solid var(--morado-suave);
+  border: 2px solid var(--accent);
   border-radius: 10px;
   box-shadow: var(--sombra-suave);
 }
@@ -590,7 +655,7 @@ h1 {
 }
 
 #next-level {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 1rem 2rem;
@@ -605,7 +670,7 @@ h1 {
 }
 
 #next-level:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
@@ -635,7 +700,7 @@ h1 {
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--morado-suave);
+  border: 4px solid var(--accent);
   box-shadow: 0 4px 10px rgba(122, 95, 162, 0.4);
   margin-bottom: 1rem;
   cursor: pointer;
@@ -648,7 +713,7 @@ h1 {
 }
 
 .perfil-avatar-btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 0.7rem 1.6rem;
@@ -663,23 +728,23 @@ h1 {
 }
 
 .perfil-avatar-btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
 .perfil-text {
   font-size: 1.1rem;
   margin: 0.6rem 0;
-  color: var(--morado-intenso);
+  color: var(--accent);
   font-weight: 500;
 }
 
 .perfil-text strong {
-  color: var(--morado-suave);
+  color: var(--accent);
 }
 
 .perfil-logout-btn {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
   border: none;
   padding: 1rem 2.5rem;
@@ -694,7 +759,7 @@ h1 {
 }
 
 .perfil-logout-btn:hover {
-  background: var(--morado-intenso);
+  background: var(--accent);
   transform: scale(1.05);
 }
 
@@ -709,7 +774,7 @@ h1 {
 
 .user-panel h1 {
   font-size: 2.4rem;
-  color: var(--morado-intenso);
+  color: var(--accent);
   margin-bottom: 1rem;
   font-weight: bold;
 }
@@ -721,8 +786,8 @@ h1 {
 
 .user-btn-flat {
   background: transparent;
-  color: var(--morado-suave);
-  border: 2px solid var(--morado-suave);
+  color: var(--accent);
+  border: 2px solid var(--accent);
   padding: 0.9rem 2rem;
   border-radius: 30px;
   font-size: 1.1rem;
@@ -732,7 +797,7 @@ h1 {
 }
 
 .user-btn-flat:hover {
-  background: var(--morado-suave);
+  background: var(--accent);
   color: var(--blanco);
 }
 
@@ -746,7 +811,7 @@ h1 {
 
 .user-card-table h2 {
   font-size: 1.4rem;
-  color: var(--morado-intenso);
+  color: var(--accent);
   margin-bottom: 1rem;
 }
 
@@ -755,22 +820,6 @@ h1 {
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
-}
-
-.user-modal-backdrop {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-.user-modal-backdrop.active {
-  display: flex;
 }
 
 .user-modal-card {
@@ -784,7 +833,7 @@ h1 {
 
 .user-modal-card h3 {
   margin-bottom: 1rem;
-  color: var(--morado-intenso);
+  color: var(--accent);
 }
 
 .user-modal-card label {
@@ -862,17 +911,6 @@ form input:focus {
   box-shadow: 0 0 3px #8e6be8aa;
 }
 
-.primary-btn {
-  background-color: #7b4bcb;
-  color: white;
-  border: none;
-  padding: 0.7rem;
-  border-radius: 10px;
-  margin-top: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
 
 .primary-btn:hover {
   background-color: #5f35a0;
@@ -1081,6 +1119,186 @@ form input:focus {
   width: 100%;
 }
 
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+
+/* Tarjeta de perfil */
+.profile-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Modal */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.modal-card label {
+  display: block;
+  text-align: left;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #6b3fc9;
+}
+.modal-card input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d0c4f3;
+  border-radius: 8px;
+  margin-top: 0.3rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.modal-card h3 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.modal-card .primary-btn {
+  background: var(--accent);
+  color: var(--blanco);
+  padding: 0.7rem 1.5rem;
+  border-radius: 30px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.modal-card .primary-btn:hover {
+  background: var(--accent);
+  transform: scale(1.05);
+}
+
+/* ===== Registro de Administrador ===== */
+.signup-box label input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.4rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+#adminKeyField {
+  margin-top: 0.8rem;
+  display: none; /* Por defecto oculto */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#adminKeyField label {
+  margin-top: 0.5rem;
+}
+
+#adminKeyField input[type="password"] {
+  background-color: #f9f6ff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.6rem;
+  width: 100%;
+  margin-top: 0.4rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#adminKeyField input[type="password"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(122, 95, 162, 0.2);
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  user-select: none;
+}
+
+.admin-checkbox input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: var(--accent);
+}
+
+.admin-option {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.admin-option label {
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  margin: 0;
+}
+
+.admin-option input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent); /* color moderno */
+  cursor: pointer;
+}
+
+
 /* Responsive para gestión de usuarios */
 @media(max-width: 600px){
   .user-cards-container {
@@ -1093,7 +1311,902 @@ form input:focus {
   }
 }
 
-/* Responsive */
+/* Responsive *//* ===== Registro de Administrador ===== */
+.signup-box label input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.4rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+#adminKeyField {
+  margin-top: 0.8rem;
+  display: none; /* Por defecto oculto */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#adminKeyField label {
+  margin-top: 0.5rem;
+}
+
+#adminKeyField input[type="password"] {
+  background-color: #f9f6ff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.6rem;
+  width: 100%;
+  margin-top: 0.4rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#adminKeyField input[type="password"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(122, 95, 162, 0.2);
+}
+
+/* ===== PERFIL DE USUARIO MEJORADO ===== */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: calc(100vh - 80px);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.profile-card {
+  background: #ffffffee;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 2.5rem 2rem;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+.profile-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Avatar */
+.perfil-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--accent);
+  box-shadow: 0 4px 15px rgba(122,95,162,0.3);
+  margin: 0 auto 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.perfil-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(122,95,162,0.5);
+}
+
+/* Botones */
+.perfil-avatar-btn,
+.logout-btn {
+  display: inline-block;
+  width: 100%;
+  max-width: 250px;
+  margin: 0.8rem auto;
+  padding: 0.7rem 1.2rem;
+  border-radius: 30px;
+  background: var(--accent);
+  color: var(--blanco);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.perfil-avatar-btn:hover,
+.logout-btn:hover {
+  background: var(--accent);
+  transform: scale(1.03);
+}
+
+/* Detalles del perfil */
+.profile-card p {
+  font-size: 1rem;
+  margin: 0.6rem 0;
+  color: #222;
+}
+.profile-card p strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Botón editar (posición absoluta) */
+#editProfileBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+#editProfileBtn:hover {
+  color: var(--accent);
+}
+
+/* Modal de edición */
+.modal-backdrop {
+  background: rgba(0,0,0,0.4);
+}
+.modal-card {
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+.modal-avatar-preview {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--accent);
+}
+
+/* Responsive Profile */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 2rem 1.5rem;
+  }
+  .perfil-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .perfil-avatar-btn,
+  .logout-btn {
+    max-width: 200px;
+  }
+}
+
+/* ===== Botón “Editar Perfil” específico ===== */
+#editProfileBtn.perfil-avatar-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent !important;
+  border: none !important;
+  width: auto;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  z-index: 10;
+}
+
+#editProfileBtn.perfil-avatar-btn:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ——— Variables por defecto ——— */
+:root {
+  --bg-color: var(--beige-claro);
+  --text-color: var(--gris-texto);
+  --accent: #7a5fa2; /* color primario editable */
+}
+
+/* ——— Tema oscuro ——— */
+:root[data-theme="dark"] {
+  --bg-color: #1e1e2f;
+  --text-color: #e0e0e0;
+}
+
+/* Aplicar variables globales */
+body {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* Slider del toggle */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 18px;
+  margin-right: 0.5rem;
+}
+.theme-switch input {
+  opacity: 0; width: 0; height: 0;
+}
+.theme-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  border-radius: 18px;
+  transition: 0.3s;
+}
+.theme-switch .slider::before {
+  content: "";
+  position: absolute;
+  height: 14px; width: 14px;
+  left: 2px; bottom: 2px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.theme-switch input:checked + .slider {
+  background: var(--accent);
+}
+.theme-switch input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
+/* Contenedor para los controles */
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+#accentPicker {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Controles de Tema (en Perfil) ===== */
+.profile-theme-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Opcional: acotar el ancho dentro de la tarjeta */
+.profile-card .profile-theme-controls {
+  max-width: 200px;
+  margin: 1rem auto;
+}
+
+/* ===== Estilos bonitos para los controles de tema en Perfil ===== */
+.profile-theme-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 1.5rem auto;
+}
+
+/* Toggle switch personalizado */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.theme-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  border-radius: 13px;
+  transition: background 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+.theme-switch .slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.theme-switch input:checked + .slider {
+  background: var(--accent);
+}
+.theme-switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* Color picker redondeado */
+#accentPicker {
+  -webkit-appearance: none;
+  border: 2px solid var(--accent);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+#accentPicker:hover {
+  box-shadow: 0 0 0 4px rgba(122,95,162,0.3);
+  border-color: var(--accent);
+}
+/* Chrome y Safari necesitan esto para que la ruleta no salga */
+#accentPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+#accentPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* Acomodar icono dentro del switch */
+.theme-switch label {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--accent);
+  gap: 0.4rem;
+  user-select: none;
+}
+
+/* ======== OVERRIDES MODO OSCURO ======== */
+:root[data-theme="dark"] {
+  --beige-claro: #2f2f3f;         /* fondo general */
+  --lila-pastel: #38384a;         /* degradados, si los usas */
+  --morado-suave: #9a79c4;        /* acento claro */
+  --morado-intenso: #7a5fa2;      /* acento intenso */
+  --gris-texto: #e0e0e0;          /* texto principal */
+  --bg-color: var(--beige-claro);
+  --card-bg: rgba(255,255,255,0.05);  /* fondo de tarjetas */
+  --header-bg: rgba(0,0,0,0.6);        /* header semi‑transparente */
+}
+
+/* cuerpo y header */
+body {
+  background: var(--bg-color) !important;
+  color: var(--gris-texto) !important;
+}
+.header {
+  background: var(--header-bg) !important;
+}
+
+/* fondos de todas las “cards” y cajas */
+.profile-card,
+.info-box,
+.user-card-table,
+.data-table th,
+.data-table td,
+.modal-card,
+.quiz-app,
+.login-box,
+.signup-box {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+
+/* enlaces y textos dentro de header/nav */
+.header nav a,
+.profile-card p,
+.data-table th,
+.data-table td {
+  color: var(--gris-texto) !important;
+}
+
+/* botones primarios y de cerrar sesión */
+/* Sólo en modo oscuro */
+:root[data-theme="dark"] .primary-btn,
+:root[data-theme="dark"] .logout-btn,
+:root[data-theme="dark"] .perfil-avatar-btn {
+  background: var(--accent) !important;
+  color: var(--blanco) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+}
+
+:root[data-theme="dark"] .primary-btn:hover,
+:root[data-theme="dark"] .logout-btn:hover,
+:root[data-theme="dark"] .perfil-avatar-btn:hover {
+  background: var(--accent) !important;
+}
+
+/* Etiquetas junto a los controles de tema */
+.profile-theme-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin: 1.5rem auto;
+}
+
+.theme-label {
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Ajustes para que el picker no saque bordes extra */
+.color-picker-wrapper input[type="color"] {
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+/* Responsive: etiquetas abajo en pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .profile-theme-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Separa avatar de controles */
+.perfil-avatar {
+  margin-bottom: 0.8rem; /* menos espacio original */
+}
+.profile-theme-controls {
+  margin-top: 0.4rem;   /* un poco más de breathing room */
+  margin-bottom: 1.5rem;/* distancia al bloque de datos */
+}
+
+/* ——— Definimos un fondo “card” que hereda de bg-color ——— */
+:root {
+  /* tu fondo claro original */
+  --bg-color: var(--beige-claro);
+  /* fondo de las tarjetas en claro */
+  --card-bg: rgba(255,255,255,0.85);
+}
+
+/* override en modo oscuro */
+:root[data-theme="dark"] {
+  --bg-color: #2f2f3f;          /* ya lo tenías */
+  --card-bg: rgba(0,0,0,0.2);   /* ahora la card será semitransparente */
+}
+
+/* aplicamos el fondo global al body y al profile-container */
+body,
+.profile-container {
+  background: var(--bg-color);
+}
+
+/* hacemos que la tarjeta herede su fondo de nuestra variable */
+.profile-card {
+  background: var(--card-bg) !important;
+  /* opcional: que no sobresombre demasiado en oscuro */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+/* ======= Estilos modal “cuadro” ======= */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal-card {
+  background: var(--blanco);
+  width: 90%;
+  max-width: 450px;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: var(--sombra-suave);
+  position: relative;
+  color: var(--gris-texto);
+}
+
+.modal-card h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+.modal-row {
+  margin-bottom: 1.2rem;
+}
+
+.modal-avatar-preview {
+  display: block;
+  margin: 0 auto 1rem;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  box-shadow: var(--sombra-suave);
+}
+
+/* ======= Modal amplio ======= */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-backdrop.active {
+  display: flex;
+}
+.modal-card.wide {
+  background: var(--blanco);
+  width: 90%;
+  max-width: 800px;      /* Más ancho */
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: var(--sombra-suave);
+  max-height: 90vh;      /* Para no salirse de pantalla */
+  overflow-y: auto;      /* Scroll interno si realmente rebasa */
+}
+.modal-card.wide h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+}
+
+/* Avatar centrado arriba */
+.modal-avatar-wrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.modal-avatar-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  box-shadow: var(--sombra-suave);
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+/* Grid de dos columnas para los campos */
+.modal-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.modal-row label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+}
+.modal-row input[type="text"],
+.modal-row input[type="email"],
+.modal-row input[type="password"],
+.modal-row input[type="file"] {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f6ff;
+}
+
+/* Botones al pie */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.modal-actions .user-btn-flat {
+  /* Acorta el padding para que no quede tan grande */
+  padding: 0.6rem 1.5rem;
+  /* Asegura un ancho mínimo uniforme */
+  min-width: 120px;
+  text-align: center;
+  /* Mantén el border-radius redondeado */
+  border-radius: 30px;
+  font-size: 1rem;
+}
+.modal-actions .user-btn-flat:hover {
+  background: var(--accent);
+  color: var(--blanco);
+}
+.modal-actions .primary-btn {
+  padding: 0.6rem 1.5rem;
+  min-width: 120px;
+  font-size: 1rem;
+  border-radius: 30px;
+}
+
+/* Ajustar sólo el tamaño de “Cancelar” para que coincida con “Guardar” */
+.modal-actions .user-btn-flat {
+  padding: 0.6rem 1.5rem;   /* mismo padding que primary-btn */
+  font-size: 1rem;          /* misma talla de letra */
+  min-width: 120px;         /* mismo ancho mínimo */
+  box-sizing: border-box;   /* para que el padding no afecte al ancho total */
+}
+
+.feedback-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin-left: 0.5rem;
+}
+
+/* Para que las retroalimentaciones tengan algo más de altura */
+.feedback-textarea {
+  min-height: 4rem;
+  resize: vertical;
+}
+
+.option.disabled {
+  cursor: not-allowed; /* Indicador de que no puede ser clickeado */
+}
+
+/* ————————————————————————
+   ✱ Revertimos sombra de celdas
+   ———————————————————————— */
+.user-card-table .data-table th,
+.user-card-table .data-table td {
+  background: transparent !important;
+  box-shadow: none         !important;
+}
+
+/* ————————————————————————
+   ✱ Damos estilo a la “tarjeta” de usuarios
+   ———————————————————————— */
+.user-card-table {
+  background: var(--blanco);
+  border-radius: 15px;
+  box-shadow: var(--sombra-suave);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Ajustes finos de bordes redondeados en la tabla dentro de la tarjeta */
+.user-card-table .data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.user-card-table .data-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+.user-card-table .data-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+.user-card-table .data-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+.user-card-table .data-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+/* Fundos de filas en blanco y hover suave */
+.user-card-table .data-table tbody tr {
+  background: var(--blanco);
+  transition: background-color 0.2s ease;
+}
+.user-card-table .data-table tbody tr:hover {
+  background: rgba(122, 95, 162, 0.05);
+}
+
+/* ————————————————————————
+   Modal de usuario (oculto por defecto)
+   ———————————————————————— */
+.user-modal-backdrop {
+  display: none;               /* lo oculta hasta que tenga .active */
+  position: fixed;
+  inset: 0;                    /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ————————————————————————
+   Cuando JS añade la clase .active lo mostramos
+   ———————————————————————— */
+.user-modal-backdrop.active {
+  display: flex;
+}
+
+/* ————————————————————————
+   El propio cuadro del modal
+   ———————————————————————— */
+.user-modal-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--sombra-suave);
+}
+
+/* === GRID CONTENEDOR === */
+.questions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+/* === CADA CARD DE PREGUNTA === */
+.question-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  box-shadow: var(--sombra-suave);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* HEADER (texto + botones) */
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--lila-pastel);
+  padding: 1rem;
+}
+
+.question-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.question-actions .action-btn {
+  margin-left: 0.5rem;
+}
+
+/* LISTA DE OPCIONES */
+.options-list {
+  padding: 1rem;
+}
+
+.option-item {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.03);
+  transition: background 0.2s;
+}
+.option-item.correct {
+  background: rgba(76,175,80,0.15);
+  border: 1px solid #4caf50;
+}
+
+/* RETROALIMENTACIÓN DE CADA OPCIÓN */
+.option-feedback {
+  font-size: 0.9rem;
+  color: var(--gris-texto);
+  margin: -0.5rem 0 0.8rem 1rem;
+}
+
+/* BOTONES DE ACCIÓN */
+.action-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  text-decoration: none;
+}
+.action-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+}
+.action-btn.delete {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+.action-btn.delete:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .question-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .options-list {
+    padding: 0.75rem;
+  }
+}
+
+/* ========================================
+   Responsive para Gestión de Usuarios
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .user-cards-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .user-card-table {
+    width: 100%;
+  }
+  .user-card-table h2 {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Permitimos scroll horizontal en la tabla */
+  .data-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .data-table thead {
+    /* opcional: ocultar encabezado si quieres un diseño “stacked” */
+    /* display: none; */
+  }
+  .data-table th,
+  .data-table td {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajusta los paddings y fuente para móviles muy pequeños */
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Modal full‑width */
+  .user-modal-card {
+    width: 95% !important;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .user-modal-card input,
+  .user-modal-card select {
+    font-size: 0.9rem;
+  }
+
+  .user-modal-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .user-modal-actions button {
+    width: 100%;
+  }
+
+  /* El botón “Nuevo usuario” más pequeño */
+  #newUserBtn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+
+/* Animación suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media(max-width: 768px){
   .main-content h1 {
     font-size: 1.8rem;
@@ -1179,4 +2292,1390 @@ form input:focus {
   .perfil-text {
     font-size: 1rem;
   }
+}
+
+/* ===== Perfil: modal de edición oculto por defecto ===== */
+.editProfileModal {
+  display: none;               /* oculto hasta activar */
+  position: fixed;
+  inset: 0;                    /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Cuando JS añade la clase .active lo mostramos */
+.editProfileModal.active {
+  display: flex;
+}
+
+/* ——— Quiz Responsivo ——— */
+@media (max-width: 600px) {
+  .quiz-app {
+    width: 100% !important;
+    margin: 1rem 0;
+    padding: 0.5rem;
+  }
+  .question-container {
+    padding: 1rem !important;
+  }
+  .question-number {
+    font-size: 0.9rem;
+  }
+  .question-text {
+    font-size: 1.1rem;
+  }
+  .option {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  .next-btn {
+    width: 100%;
+    padding: 0.8rem 0;
+  }
+  /* Ajusta la barra de progreso para que no desborde */
+  .progress-container {
+    margin: -0.5rem 0.5rem 1rem;
+  }
+}
+
+
+/* ——— Para permitir pointer events en puzzle (touch & mouse) ——— */
+.piece {
+  touch-action: none; /* desactiva scroll nativo mientras arrastras */
+  cursor: grab;
+}
+
+/* —————————————————————————————————————————————
+   Tarjetas informativas del Sistema Linfático
+   ————————————————————————————————————————————— */
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  inline-size: none;
+}
+.info-cards a {
+  text-decoration: none;
+  color: inherit; /* hereda el color del texto */
+}
+
+@media (min-width: 768px) {
+  .info-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.info-card {
+  display: flex;
+  background: var(--blanco);
+  border-radius: 15px;
+  box-shadow: var(--sombra-suave);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.info-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin: 1rem;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.info-text {
+  padding: 1.5rem 1rem;
+  text-align: left;
+}
+
+.info-text h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.info-text p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--gris-texto);
+}
+
+/* Ajustes responsive finos */
+@media (max-width: 480px) {
+  .info-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .info-card img {
+    margin: 1rem auto 0.5rem;
+  }
+  .info-text {
+    padding: 1rem;
+  }
+}
+
+/* ========= Footer ========= */
+/* ====== Footer compacto y layout horizontal ====== */
+.footer {
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;               /* menos padding vertical */
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;     /* texto a la izquierda, iconos a la derecha */
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;                       /* separación entre líneas de info */
+}
+
+.footer-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;                        /* icono + texto */
+}
+
+.footer-item span {
+  line-height: 1.2;
+}
+
+/* Botones sociales */
+.footer-social {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.social-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+}
+
+/* Colores de cada red */
+.social-btn.facebook  { background: #3b5998; }
+.social-btn.twitter   { background: #1da1f2; }
+.social-btn.instagram { background: #e4405f; }
+.social-btn.whatsapp  { background: #25d366; }
+
+/* ====== Responsive móvil ====== */
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .footer-social {
+    align-self: flex-end;            /* iconos abajo a la derecha */
+  }
+}
+
+/* ——— Overrides generales para modo oscuro ——— */
+:root[data-theme="dark"] {
+  /* Variables específicas de modo oscuro */
+  --card-bg: rgba(0,0,0,0.3);
+  --text-light: #e0e0e0;
+  --btn-bg: var(--accent);
+  --btn-hover: var(--accent);
+}
+
+/* Body y header */
+:root[data-theme="dark"] body {
+  background: var(--bg-color) !important;
+  color: var(--text-light) !important;
+}
+:root[data-theme="dark"] .header {
+  background: var(--header-bg) !important;
+}
+
+/* Tarjetas, bloques del carrusel, info‑box, modals, quiz, etc. */
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .bloque,
+:root[data-theme="dark"] .info-box,
+:root[data-theme="dark"] .modal-card,
+:root[data-theme="dark"] .quiz-app,
+:root[data-theme="dark"] .user-card-table {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+
+/* Texto dentro de esos contenedores */
+:root[data-theme="dark"] .card .content p,
+:root[data-theme="dark"] .bloque p,
+:root[data-theme="dark"] .info-box p,
+:root[data-theme="dark"] .user-card-table .data-table th,
+:root[data-theme="dark"] .user-card-table .data-table td {
+  color: var(--text-light) !important;
+}
+
+/* Enlaces en modo oscuro */
+:root[data-theme="dark"] .card .content a,
+:root[data-theme="dark"] .bloque a {
+  color: var(--accent) !important;
+}
+
+/* Botones de carrusel y quiz */
+:root[data-theme="dark"] .btn,
+:root[data-theme="dark"] .next-btn,
+:root[data-theme="dark"] .primary-btn,
+:root[data-theme="dark"] .action-btn,
+:root[data-theme="dark"] .user-btn-flat {
+  background: var(--btn-bg) !important;
+  color: var(--blanco) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+}
+:root[data-theme="dark"] .btn:hover,
+:root[data-theme="dark"] .next-btn:hover,
+:root[data-theme="dark"] .primary-btn:hover,
+:root[data-theme="dark"] .action-btn:hover,
+:root[data-theme="dark"] .user-btn-flat:hover {
+  background: var(--btn-hover) !important;
+}
+
+/* Contador del carrusel */
+:root[data-theme="dark"] .counter {
+  color: var(--text-light) !important;
+}
+
+/* Tablas de gestión de usuarios */
+:root[data-theme="dark"] .data-table {
+  background: transparent !important;
+}
+:root[data-theme="dark"] .data-table th,
+:root[data-theme="dark"] .data-table td {
+  background: var(--card-bg) !important;
+  color: var(--text-light) !important;
+}
+
+/* Opciones del quiz */
+:root[data-theme="dark"] .option {
+  background-color: rgba(255,255,255,0.1) !important;
+}
+:root[data-theme="dark"] .option:hover {
+  background-color: rgba(255,255,255,0.2) !important;
+}
+
+/* Footer en modo oscuro (ya es púrpura, pero ajustamos texto si hace falta) */
+:root[data-theme="dark"] .footer {
+  background: var(--accent) !important;
+}
+:root[data-theme="dark"] .footer,
+:root[data-theme="dark"] .footer-item span {
+  color: var(--blanco) !important;
+}
+
+/* ——— Extiende dark mode a Preguntas Registradas ——— */
+:root[data-theme="dark"] .question-card {
+  background: var(--card-bg) !important;
+}
+:root[data-theme="dark"] .question-card .question-header {
+  background: var(--header-bg) !important;
+}
+:root[data-theme="dark"] .question-card .question-text,
+:root[data-theme="dark"] .question-card .option-item,
+:root[data-theme="dark"] .question-card .option-feedback {
+  color: var(--text-light) !important;
+}
+:root[data-theme="dark"] .question-card .action-btn {
+  background: var(--btn-bg) !important;
+  color: var(--blanco) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+}
+:root[data-theme="dark"] .question-card .action-btn.delete {
+  border-color: #e74c3c !important;
+  color: #e74c3c !important;
+}
+
+/* ——— Extiende dark mode al carrusel de imágenes ——— */
+:root[data-theme="dark"] .carousel-container {
+  background: var(--card-bg) !important;
+  border-color: var(--accent) !important;
+}
+:root[data-theme="dark"] .carousel-container .bloque {
+  background: var(--card-bg) !important;
+}
+:root[data-theme="dark"] .carousel-container .bloque p {
+  color: var(--text-light) !important;
+}
+:root[data-theme="dark"] .carousel-container .carousel-controls .counter {
+  color: var(--text-light) !important;
+}
+:root[data-theme="dark"] .carousel-container .carousel-controls .btn {
+  background: var(--btn-bg) !important;
+  color: var(--blanco) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+}
+
+/* ——— Dark mode: info-cards ——— */
+:root[data-theme="dark"] .info-card {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+
+:root[data-theme="dark"] .info-card h2,
+:root[data-theme="dark"] .info-text p {
+  color: var(--text-light) !important;
+}
+
+/* Ajuste extra para que las imágenes no pierdan contraste */
+:root[data-theme="dark"] .info-card img {
+  filter: brightness(0.9) contrast(1.1);
+}
+
+/* ——— Dark mode: textos de hero y features ——— */
+:root[data-theme="dark"] .hero-subtitle,
+:root[data-theme="dark"] .feature-box h2,
+:root[data-theme="dark"] .feature-box p {
+  color: var(--text-color) !important; /* <-- tu variable para texto claro en dark mode */
+}
+
+/* ——— Dark mode: hero y feature‑boxes ——— */
+:root[data-theme="dark"] .hero-subtitle {
+  color: var(--text-color) !important;
+}
+
+:root[data-theme="dark"] .feature-box {
+  background: var(--card-bg) !important;
+}
+
+:root[data-theme="dark"] .feature-box h2,
+:root[data-theme="dark"] .feature-box p {
+  color: var(--text-color) !important;
+}
+
+/* ========== STATISTICS SECTION ========== */
+.stats-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--lila-pastel);
+  padding: 2rem 1rem;
+  border-radius: 15px;
+  box-shadow: var(--sombra-suave);
+  margin: 3rem auto;
+  max-width: 1000px;
+}
+
+.stats-section .stat {
+  flex: 1 1 200px;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.stats-section .stat strong {
+  display: block;
+  font-size: 2.2rem;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.stats-section .stat span {
+  display: block;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+
+/* ========== HOW IT WORKS ========== */
+.how-it-works {
+  max-width: 1000px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.steps-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.step {
+  flex: 1 1 260px;
+  background: var(--blanco);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--sombra-suave);
+  text-align: center;
+}
+
+.step-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.step h3 {
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  font-size: 1rem;
+  color: var(--gris-texto);
+  line-height: 1.4;
+}
+
+
+/* ========== TESTIMONIALS ========== */
+.testimonials {
+  max-width: 1000px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.testimonials h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.testimonial {
+  flex: 1 1 320px;
+  background: var(--blanco);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--sombra-suave);
+  position: relative;
+}
+
+.testimonial p {
+  font-style: italic;
+  color: var(--gris-texto);
+  margin-bottom: 1rem;
+}
+
+.testimonial footer {
+  font-weight: 600;
+  color: var(--accent);
+  text-align: right;
+}
+
+
+/* ========== FAQ ACCORDION ========== */
+.faq {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+.faq h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0.75rem 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.faq-question:hover {
+  color: var(--accent);
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 0.5rem 0.75rem;
+  color: var(--gris-texto);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+
+/* ========== CALL TO ACTION BANNER ========== */
+.cta-banner {
+  background: var(--accent);
+  color: var(--blanco);
+  text-align: center;
+  padding: 2.5rem 1rem;
+  margin: 4rem 0;
+  border-radius: 12px;
+}
+
+.cta-banner h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.cta-banner p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-banner .primary-btn {
+  background: var(--blanco);
+  color: var(--accent);
+  border: 2px solid var(--blanco);
+  padding: 0.8rem 2rem;
+  transition: all 0.3s;
+}
+
+.cta-banner .primary-btn:hover {
+  background: transparent;
+  color: var(--blanco);
+}
+
+
+/* ========== RESPONSIVE SMALL VIEWPORTS ========== */
+@media (max-width: 768px) {
+  .stats-section {
+    flex-direction: column;
+  }
+  .steps-container,
+  .testimonial-cards {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .step, .testimonial, .stat {
+    flex: 1 1 100%;
+  }
+}
+
+/* ================== Dark‑mode overrides para Secciones Nuevas ================== */
+:root[data-theme="dark"] {
+  /* Asegúrate de tener ya definidas:
+     --card-bg: fondo de tarjetas en oscuro
+     --text-color: color de texto en oscuro
+     --gris-texto: color de texto secundario
+  */
+}
+
+/* Estadísticas (stats‑section) */
+:root[data-theme="dark"] .stats-section {
+  background: var(--card-bg) !important;
+  color: var(--text-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+:root[data-theme="dark"] .stats-section .stat strong,
+:root[data-theme="dark"] .stats-section .stat span {
+  color: var(--text-color) !important;
+}
+
+/* Cómo Funciona (how-it-works) */
+:root[data-theme="dark"] .how-it-works {
+  color: var(--text-color);
+}
+:root[data-theme="dark"] .how-it-works h2 {
+  color: var(--accent) !important;
+}
+:root[data-theme="dark"] .how-it-works .step {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  color: var(--text-color) !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+:root[data-theme="dark"] .how-it-works .step h3,
+:root[data-theme="dark"] .how-it-works .step .step-icon {
+  color: var(--accent) !important;
+}
+:root[data-theme="dark"] .how-it-works .step p {
+  color: var(--gris-texto) !important;
+}
+
+/* Testimonios (testimonials) */
+:root[data-theme="dark"] .testimonials {
+  color: var(--text-color);
+}
+:root[data-theme="dark"] .testimonials h2 {
+  color: var(--accent) !important;
+}
+:root[data-theme="dark"] .testimonial-cards .testimonial {
+  background: var(--card-bg) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  color: var(--text-color) !important;
+}
+:root[data-theme="dark"] .testimonial p {
+  color: var(--gris-texto) !important;
+}
+:root[data-theme="dark"] .testimonial footer {
+  color: var(--accent) !important;
+}
+
+/* FAQ Accordion */
+:root[data-theme="dark"] .faq {
+  color: var(--text-color);
+}
+:root[data-theme="dark"] .faq h2 {
+  color: var(--accent) !important;
+}
+:root[data-theme="dark"] .faq-item {
+  border-color: rgba(255,255,255,0.1);
+}
+:root[data-theme="dark"] .faq-question {
+  color: var(--accent) !important;
+}
+:root[data-theme="dark"] .faq-answer {
+  color: var(--gris-texto) !important;
+}
+
+/* Banner CTA */
+:root[data-theme="dark"] .cta-banner {
+  background: var(--accent) !important;
+  color: var(--blanco) !important;
+}
+:root[data-theme="dark"] .cta-banner .primary-btn {
+  background: var(--blanco) !important;
+  color: var(--accent) !important;
+  border-color: var(--blanco) !important;
+}
+:root[data-theme="dark"] .cta-banner .primary-btn:hover {
+  background: transparent !important;
+  color: var(--blanco) !important;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  :root[data-theme="dark"] .stats-section,
+  :root[data-theme="dark"] .steps-container,
+  :root[data-theme="dark"] .testimonial-cards {
+    flex-direction: column;
+  }
+}
+
+/* ===== Modal de mensajes genérico ===== */
+.message-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.message-modal.active {
+  display: flex;
+}
+.message-content {
+  background: var(--blanco);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  width: 320px;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+.message-content p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--gris-texto);
+}
+/* si es error */
+.message-content p.error {
+  color: #f44336;
+}
+/* botón “Aceptar” */
+.message-content button {
+  background: var(--accent);
+  color: var(--blanco);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.message-content button:hover {
+  background: var(--accent);
+}
+
+/* ===== Asegúrate de que los inputs del form tengan bordes visibles en oscuro ===== */
+:root[data-theme="dark"] .modal-card input,
+:root[data-theme="dark"] .modal-card label {
+  color: var(--gris-texto);
+}
+
+/* ===== Modal de mensajes genérico ===== */
+.message-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.message-modal.active {
+  display: flex;
+}
+.message-content {
+  background: var(--blanco);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  width: 320px;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+.message-content p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--gris-texto);
+}
+.message-content p.error {
+  color: #f44336;
+}
+/* Botón “Aceptar” */
+.message-content button {
+  background: var(--accent);
+  color: var(--blanco);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.message-content button:hover {
+  background: var(--accent);
+}
+
+/* Ajustes para el strength-bar (ya definidas en tu CSS) */
+.strength-bar.weak   { background-color: #e74c3c; width: 33%; }
+.strength-bar.medium { background-color: #f39c12; width: 66%; }
+.strength-bar.strong { background-color: #27ae60; width: 100%; }
+
+/* ===== Modal de mensajes genérico ===== */
+.message-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+.message-modal.active {
+  display: flex;
+}
+.message-content {
+  background: var(--blanco);
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  max-width: 90%;
+  width: 320px;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+.message-content p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--gris-texto);
+}
+.message-content p.error {
+  color: #f44336;
+}
+/* Botón “Aceptar” */
+.message-content button {
+  background: var(--accent);
+  color: var(--blanco);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.message-content button:hover {
+  background: var(--accent);
+}
+
+.review-container {
+  margin-top: 2rem;
+}
+.review-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+.review-item h4 {
+  margin: 0 0 0.5rem;
+}
+.review-item .user-answer {
+  font-weight: bold;
+}
+.review-item .correct-answer {
+  color: var(--green);
+  font-weight: bold;
+}
+.review-item .incorrect-answer {
+  color: var(--red);
+  font-weight: bold;
+}
+
+/* contenedor de configuración */
+.test-config {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* select personalizado */
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color, #aaa);
+  border-radius: 0.5rem;
+  background-color: var(--input-bg, #fff);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  cursor: pointer;
+}
+
+/* botón iniciar */
+.start-btn {
+  margin-left: 1rem;
+  white-space: nowrap;
+}
+
+/* ocultar con clase hidden */
+.hidden {
+  display: none !important;
+}
+
+/* adapta al modo oscuro */
+body.dark-mode .custom-select {
+  background-color: #333;
+  color: #eee;
+  border-color: #555;
+}
+
+/* === Responsive para la sección de “Contenido detallado – Linfoides” === */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Ajustes generales de la tarjeta en móvil */
+.card {
+  width: 260px;
+  height: 260px;
+}
+.card .content img {
+  height: 180px;
+}
+
+.game-container {
+  padding: 1rem;
+  text-align: center;
+}
+
+.game-setup, .game-section {
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+/* Nuevo estilo para la pieza “seleccionada” en móvil */
+.piece.selected {
+  outline: 3px solid #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+.image-info {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #fff;
+}
+.hidden { display: none !important; }
+
+
+/* pieza seleccionada en móvil/desktop click */
+.piece.selected {
+  outline: 3px solid #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+/* cuadro de información dentro del modal */
+.image-info {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #fff;
+}
+
+/* utilitario para ocultar */
+.hidden { display: none !important; }
+
+/* Modal (si aún no lo tienes) */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-backdrop.active {
+  display: flex;
+}
+.modal-card {
+  background: var(--blanco);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+.modal-card h3 {
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.modal-card .primary-btn {
+  margin-top: 1rem;
+}
+
+.primary-btn {
+  background: var(--accent);
+  /* … */
+}
+.primary-btn:hover {
+  background: var(--accent);
+}
+
+/* y en todos los sitios donde uses el color base o el intenso */
+.header nav a {
+  color: var(--accent);
+}
+/* … etc … */
+
+/* ======================
+   Footer siempre igual
+   ====================== */
+:root[data-theme="dark"] .footer {
+  background: var(--accent) !important;
+  /* si quieres, también forzamos el texto blanco */
+  color: #fff !important;
+}
+
+body {
+  background: var(--bg-color) !important;
+  color: var(--text-color);
+  /* … */
+}
+
+/* ================= PROFILE THEME CONTROLS LAYOUT ================= */
+.profile-theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;               /* que nunca rompa línea en desktop */
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+/* Botón Resetear Colores en línea, forma rectangular */
+#resetColorsBtn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+#resetColorsBtn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+  transform: scale(1.03);
+}
+
+/* En móviles, apilar y ancho total */
+@media (max-width: 600px) {
+  .profile-theme-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* que el reset sea full width en móvil */
+  #resetColorsBtn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Contenedor del backdrop: centrado y con algo de padding */
+.editProfileModal {
+  display: none;               /* oculto hasta que tenga .active */
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;     /* centra horizontal */
+  align-items: center;         /* centra vertical */
+  padding: 1rem;               /* espacio para que no toque bordes */
+  z-index: 1000;
+}
+/* Cuando está activo, lo mostramos como flex */
+.editProfileModal.active {
+  display: flex;
+}
+
+/* El propio cuadro del modal: ancho limitado y alto máximo */
+.modal-card.wide {
+  background: var(--blanco) !important;
+  width: 100%;
+  max-width: 500px;                    /* ancho máximo */
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: var(--sombra-suave);
+  /* limitamos la altura al viewport y volcamos el scroll en el contenido */
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+/* Opcional: que el scroll interno tenga un padding cómodo */
+.modal-card.wide::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-card.wide::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+/* Asegúrate además de que el body no scrollée detrás */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------
+   1) Hacemos la tarjeta más ancha y centrada
+-------------------------------------------------- */
+.profile-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+/* --------------------------------------------------
+   2) Rejilla de controles: 3 en fila + botón abajo
+-------------------------------------------------- */
+.profile-theme-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+/* Cada par “input + label” */
+.control-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;           /* ocupan el mismo espacio */
+  min-width: 100px;      /* evitan encogerse demasiado */
+}
+
+/* Etiqueta descriptiva */
+.theme-label {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+/* Botón de reseteo, ocupa toda la fila (order:1 lo deja al final) */
+.reset-btn {
+  order: 1;
+  flex: 1 1 100%;
+  max-width: 240px;
+  margin: 1rem auto 0;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.reset-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+}
+
+/* --------------------------------------------------
+   3) Alinear la info del perfil a la izquierda
+-------------------------------------------------- */
+.profile-card p {
+  text-align: left;
+  max-width: 600px;
+  margin: 0.5rem auto;
+  color: #333;
+}
+.profile-card p strong {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------
+   4) Responsive: apilar controles en móvil
+-------------------------------------------------- */
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 1rem;
+  }
+
+  .profile-theme-controls {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .control-group {
+    width: 100%;
+  }
+  .reset-btn {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------
+   Layout de controles en Perfil
+-------------------------------------------------- */
+.profile-theme-controls {
+  display: flex;
+  justify-content: space-between;   /* uno a la izquierda, uno en medio, uno a la derecha */
+  align-items: center;
+  flex-wrap: wrap;                  /* en móvil permitir apilar */
+  width: 100%;
+  max-width: 600px;                 /* o el ancho que desees */
+  margin: 1.5rem auto;              /* centro horizontal */
+  gap: 1rem;
+}
+
+/* Cada control (toggle/color/color) */
+.control-group {
+  flex: 1 1 0;        /* reparten el espacio disponible */
+  text-align: center; /* icono/label centrados en su columna */
+  min-width: 120px;   /* que nunca sean demasiado estrechos */
+}
+
+/* El botón “Resetear Colores” ocupa toda la fila y se centra */
+.reset-btn {
+  order: 1;                 /* fuerza a la última fila */
+  flex: 1 1 100%;           /* ocupa el 100% de ancho de .profile-theme-controls */
+  max-width: 240px;         /* ancho máximo deseado */
+  margin: 1rem auto 0;      /* se centra */
+  padding: 0.8rem 1.6rem;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+.reset-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+  transform: scale(1.03);
+}
+
+/* --------------------------------------------------
+   Alinear la info de perfil a la izquierda
+-------------------------------------------------- */
+.profile-card p {
+  text-align: left;
+  max-width: 600px;
+  margin: 0.5rem auto;   /* centro horizontal pero texto alineado a la izquierda */
+  color: var(--gris-texto);
+}
+.profile-card p strong {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------
+   Responsive: apilar controles en móvil
+-------------------------------------------------- */
+@media (max-width: 600px) {
+  .profile-theme-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .control-group {
+    width: 100%;
+  }
+  .reset-btn {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+:root {
+  --accent: #7a5fa2;   /* antes --morado-suave */
+  --bg-color: var(--beige-claro);
+  --text-color: var(--gris-texto);
+}
+
+/* ejemplo de reemplazo */
+.primary-btn {
+  background: var(--accent);
+  /* ... */
+}
+.header nav a,
+.profile-card p strong {
+  color: var(--accent);
+}
+.profile-avatar {
+  border-color: var(--accent);
+}
+/* igual para todos los sitios donde uses morado-suave */
+
+.profile-theme-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 360px;    /* ancho a tu gusto */
+  margin: 1.5rem auto;
+}
+.control-switch,
+.control-colorpicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.control-switch .label-text,
+.control-colorpicker .label-text {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ───── Slider toggle ───── */
+.theme-switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.theme-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc;
+  border-radius: 13px;
+  transition: background 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+.theme-switch .slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px; bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.theme-switch input:checked + .slider {
+  background: var(--accent);
+}
+.theme-switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+/* -------- Botón Resetear Colores -------- */
+.reset-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.7rem 1.4rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.reset-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
 }

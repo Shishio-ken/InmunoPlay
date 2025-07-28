@@ -8,12 +8,13 @@
     <form action="/links/add" method="POST" id="preguntaForm">
       <div class="form-group mb-3">
         <label for="enunciado">Pregunta:</label>
-        <input type="text" class="form-control" name="enunciado" placeholder="Escribe la pregunta" required>
+        <input type="text" class="form-control" name="enunciado"
+               placeholder="Escribe la pregunta" required>
       </div>
 
       <div class="form-group mb-3">
         <label for="cantidad">Número de respuestas:</label>
-        <select id="cantidad" class="form-control" required>
+        <select id="cantidad" class="form-control" name="cantidad" required>
           <option value="">Selecciona</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -30,32 +31,40 @@
   <!-- Listado de preguntas -->
   <h2 class="my-4 text-center">Preguntas Registradas</h2>
 
-  {{#each preguntas}}
-    <div class="card mb-3">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <div>{{enunciado}}</div>
-        <div>
-          <a href="/links/edit/{{id}}" class="btn btn-sm btn-warning me-1">Editar</a>
-          <a href="/links/delete/{{id}}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar esta pregunta?')">Eliminar</a>
+  <div class="questions-list">
+    {{#each preguntas}}
+      <div class="question-card">
+        <div class="question-header">
+          <div class="question-text">{{this.enunciado}}</div>
+          <div class="question-actions">
+            <a href="/links/edit/{{this.id}}" class="action-btn">Editar</a>
+            <form action="/links/delete/{{this.id}}" method="POST" style="display:inline">
+              <button type="submit" class="action-btn delete"
+                      onclick="return confirm('¿Eliminar esta pregunta?')">
+                Eliminar
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="options-list">
+          {{#each this.opciones}}
+            <div class="option-item {{#if es_correcta}}correct{{/if}}">
+              {{texto_opcion}}
+            </div>
+            {{#if retroalimentacion}}
+              <div class="option-feedback">
+                <strong>Retroalimentación:</strong> {{retroalimentacion}}
+              </div>
+            {{/if}}
+          {{/each}}
         </div>
       </div>
-      <ul class="list-group list-group-flush">
-        {{#each opciones}}
-          <li class="list-group-item {{#if es_correcta}}list-group-item-success fw-bold{{/if}}">
-            {{texto_opcion}}
-            {{#if es_correcta}}
-              <span class="badge bg-success float-end">✔ Correcta</span>
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  {{else}}
-    <div class="alert alert-warning text-center">
-      No hay preguntas aún.
-    </div>
-  {{/each}}
+    {{else}}
+      <div class="alert alert-warning text-center">
+        No hay preguntas aún.
+      </div>
+    {{/each}}
+  </div>
 </main>
 
-<!-- Tu script de generación dinámica -->
 <script src="/js/preguntas.js"></script>
