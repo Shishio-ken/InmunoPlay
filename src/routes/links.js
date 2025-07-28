@@ -156,7 +156,6 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
 
 
 // Usuarios
-
 // Ruta para mostrar usuarios
 router.get('/users', isLoggedIn, async (req, res) => {
   try {
@@ -205,20 +204,28 @@ router.get('/api/:id', isLoggedIn, async (req, res) => {
   }
 });
 
-
 // Crear nuevo usuario (POST)
 router.post('/api', isLoggedIn, async (req, res) => {
-  const { nombre, correo, rol } = req.body;
+  const { nombre, apellido, correo, rol, contraseña } = req.body;
   try {
-    await pool.query('INSERT INTO usuarios (nombre, correo, rol, username, contraseña) VALUES (?, ?, ?, ?, ?)', [
-      nombre,
-      correo,
-      rol,
-      correo, // puedes generar un username desde correo
-      '1234' // contraseña temporal, idealmente hasheada
-    ]);
+    // Hashear la contraseña (o asignar una por defecto segura)
+    const hashedPassword = await bcrypt.hash(contraseña || '1234', 10);
+
+    await pool.query(
+      'INSERT INTO usuarios (nombre, apellido, correo, rol, username, contraseña) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        nombre,
+        apellido || '',
+        correo,
+        rol,
+        correo,          // username por defecto
+        hashedPassword
+      ]
+    );
+
     res.status(201).json({ message: 'Usuario creado' });
   } catch (err) {
+    console.error('Error al crear usuario:', err);  // <- agrega log
     res.status(500).json({ error: 'Error al crear usuario' });
   }
 });

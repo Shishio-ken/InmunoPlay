@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <textarea class="form-control feedback-textarea"
                   name="feedback${i}"
                   id="feedback${i}"
-                  placeholder="Explica por qué esta opción está bien o mal"
-                  required></textarea>
+                  placeholder="Explica por qué esta opción está bien o mal"></textarea>
       `;
       opcionesContainer.appendChild(wrapper);
     }

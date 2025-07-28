@@ -1046,7 +1046,7 @@ form input:focus {
 }
 
 .highlight {
-  color: #9f5fff;
+  color: var(--accent);
 }
 
 .hero-subtitle {
@@ -3679,3 +3679,121 @@ body.modal-open {
   background: var(--accent);
   color: var(--blanco);
 }
+
+.profile-theme-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.switch-group {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+.theme-switch, .color-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.reset-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.7rem 1.4rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.reset-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+}
+
+/* --- Header general --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo-link {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+/* --- Links --- */
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* --- Botón hamburguesa --- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  width: 30px;
+  height: 25px;
+}
+.menu-toggle span {
+  height: 3px;
+  width: 100%;
+  background: #333;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    flex-direction: column;
+    background: #fff;
+    width: 200px;
+    padding: 20px;
+    gap: 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .nav-links.active {
+    transform: translateX(0);
+  }
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* Fondo adaptativo al modo oscuro */
+[data-theme="dark"] .nav-links.active {
+  background: #2c2c2c;
+}
+

@@ -14,30 +14,37 @@
 
 <body>
   <header class="header">
-    <div class="logo">
-      <a href="/" style="text-decoration: none; color: var(--morado-suave);">
-        ImmunoPlay
-      </a>
-    </div>
+  <div class="logo">
+    <a href="/" class="logo-link">ImmunoPlay</a>
+  </div>
 
-    <nav class="nav-links">
-      <a href="/informative">Información</a>
-      <a href="/quiz">Test</a>
-      <a href="/game">Juego</a>
+  <!-- Botón hamburguesa (solo móviles) -->
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-      {{#ifEq user.rol "administrador"}}
-      <a href="/links/users">Administrar Usuarios</a>
-      <a href="/links/add">Administrar Preguntas</a>
-      {{/ifEq}}
+  <!-- Menú de navegación -->
+  <nav class="nav-links" id="nav-links">
+    <a href="/informative">Información</a>
+    <a href="/quiz">Test</a>
+    <a href="/game">Juego</a>
 
-      {{#if user}}
-      <a href="/profile">Perfil</a>
-      <a href="/logout">Cerrar sesión</a>
-      {{else}}
-      <a href="/signin">Iniciar sesión</a>
-      {{/if}}
-    </nav>
-  </header>
+    {{#ifEq user.rol "administrador"}}
+    <a href="/links/users">Administrar Usuarios</a>
+    <a href="/links/add">Administrar Preguntas</a>
+    {{/ifEq}}
+
+    {{#if user}}
+    <a href="/profile">Perfil</a>
+    <a href="/logout">Cerrar sesión</a>
+    {{else}}
+    <a href="/signin">Iniciar sesión</a>
+    {{/if}}
+  </nav>
+</header>
+
   {{!-- … resto de tu HTML de listado/edición de preguntas … --}}
 
   {{!-- MODAL DE FEEDBACK --}}
