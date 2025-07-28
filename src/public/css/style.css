@@ -1046,7 +1046,7 @@ form input:focus {
 }
 
 .highlight {
-  color: #9f5fff;
+  color: var(--accent);
 }
 
 .hero-subtitle {
