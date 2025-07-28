@@ -1,11 +1,11 @@
 <main class="profile-container">
   <div class="profile-card">
-    <!-- Botón editar perfil -->
-    <div class="profile-header">
-      <button id="editProfileBtn" class="perfil-avatar-btn">Editar Perfil</button>
-    </div>
 
     <!-- Controles de tema -->
+    <div class="profile-header">
+      <img id="userAvatar" src="{{user.avatar}}" alt="Avatar" class="perfil-avatar">
+      <button id="editProfileBtn" class="perfil-avatar-btn">Editar Perfil</button>
+    </div>
 
     <div class="profile-theme-panel">
       <div class="switch-group">
@@ -39,6 +39,11 @@
   <div class="modal-card wide">
     <h3>Editar Perfil</h3>
     <form id="editProfileForm" enctype="multipart/form-data">
+      <div class="modal-avatar-wrapper">
+        <img id="avatarPreview" src="{{user.avatar}}" alt="Vista previa avatar" class="modal-avatar-preview">
+        <label for="avatarInput">Cambiar avatar</label>
+        <input type="file" name="avatar" id="avatarInput" accept="image/*">
+      </div>
       <div class="modal-content-grid">
         <div class="modal-row">
           <label for="username">Username</label>
