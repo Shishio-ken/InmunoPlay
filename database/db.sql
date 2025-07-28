@@ -64,3 +64,67 @@ CREATE TABLE progreso (
     completado BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
+
+
+CREATE TABLE auditoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tabla_afectada VARCHAR(50),
+    accion VARCHAR(10), -- 'INSERT', 'UPDATE', 'DELETE'
+    usuario_afectado INT, -- puede ser NULL si no aplica
+    datos_anteriores TEXT,
+    datos_nuevos TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+-- Triger Insert
+
+DELIMITER $$
+CREATE TRIGGER aud_usuarios_insert
+AFTER INSERT ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabla_afectada, accion, usuario_afectado, datos_nuevos)
+    VALUES ('usuarios', 'INSERT', NEW.id, CONCAT('username: ', NEW.username, ', correo: ', NEW.correo));
+END$$
+DELIMITER ;
+
+
+
+
+-- Triger Update
+
+DELIMITER $$
+CREATE TRIGGER aud_usuarios_update
+AFTER UPDATE ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabla_afectada, accion, usuario_afectado, datos_anteriores, datos_nuevos)
+    VALUES (
+        'usuarios',
+        'UPDATE',
+        NEW.id,
+        CONCAT('username: ', OLD.username, ', correo: ', OLD.correo),
+        CONCAT('username: ', NEW.username, ', correo: ', NEW.correo)
+    );
+END$$
+DELIMITER ;
+
+
+
+
+
+-- Triger Delete
+
+
+DELIMITER $$
+CREATE TRIGGER aud_usuarios_delete
+AFTER DELETE ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria (tabla_afectada, accion, usuario_afectado, datos_anteriores)
+    VALUES ('usuarios', 'DELETE', OLD.id, CONCAT('username: ', OLD.username, ', correo: ', OLD.correo));
+END$$
+DELIMITER ;

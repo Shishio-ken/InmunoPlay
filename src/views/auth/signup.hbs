@@ -3,51 +3,78 @@
     <h2 class="signup-title">Registro de Usuario</h2>
 
     {{#if message}}
-      <div class="alert alert-danger text-center">{{message}}</div>
+    <div class="alert alert-danger text-center">{{message}}</div>
     {{/if}}
 
     {{#if success}}
-      <div class="alert alert-success text-center">{{success}}</div>
+    <div class="alert alert-success text-center">{{success}}</div>
     {{/if}}
 
-    <form action="/signup" method="POST" id="signupForm">
-      <label for="username">Nombre de usuario</label>
-      <input type="text" name="username" required>
+    <form action="/signup" method="POST" id="signupForm" class="signup-form-grid">
 
-      <label for="nombre">Nombre</label>
-      <input type="text" name="nombre" required>
+      <!-- Columna izquierda -->
+      <div class="form-group">
+        <label for="username">Nombre de usuario</label>
+        <input type="text" name="username">
+      </div>
 
-      <label for="apellido">Apellido</label>
-      <input type="text" name="apellido" required>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre">
+      </div>
 
-      <label for="correo">Correo electrónico</label>
-      <input type="email" name="correo" required>
+      <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" name="apellido">
+      </div>
 
-      <div class="mb-3">
-        <div id="password-strength" class="mt-2">
-          <label for="contraseña">Contraseña</label>
-          <input type="password" name="contraseña" id="contraseña" required>
-          <div id="strength-bar" class="strength-bar"></div>
-          <small id="strength-text" class="text-muted">Introduce una contraseña</small>
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" name="correo">
+      </div>
+
+      <!-- Columna derecha con contraseña -->
+      <div class="form-group full-width password-wrapper">
+        <label for="contraseña">Contraseña</label>
+        <label for="confirmar" class="label-inline">Confirmar contraseña</label>
+
+        <div class="password-row">
+          <div class="password-field">
+            <input type="password" name="contraseña" id="contraseña">
+            <button type="button" class="toggle-password" data-target="contraseña">👁</button>
+          </div>
+          <div class="password-field">
+            <input type="password" name="confirmar" id="confirmar">
+            <button type="button" class="toggle-password" data-target="confirmar">👁</button>
+          </div>
+        </div>
+
+        <div id="strength-bar" class="strength-bar"></div>
+        <small id="strength-text" class="text-muted">Introduce una contraseña</small>
+
+        <ul class="password-rules">
+          <li>Mínimo 8 caracteres</li>
+          <li>Al menos una mayúscula</li>
+          <li>Al menos un número</li>
+          <li>Al menos un carácter especial</li>
+        </ul>
+
+        <!-- Checkbox debajo de reglas -->
+        <div class="admin-option">
+          <input type="checkbox" id="isAdmin" name="isAdmin">
+          <label for="isAdmin">¿Registrar como Administrador?</label>
+        </div>
+
+        <!-- Campo de clave admin -->
+        <div id="adminKeyField" style="display:none;" class="admin-key-field">
+          <label for="adminKey">Clave única de administrador</label>
+          <input type="password" id="adminKey" name="adminKey">
         </div>
       </div>
 
-      <label for="confirmar">Confirmar contraseña</label>
-      <input type="password" name="confirmar" id="confirmar" required>
-
-      <!-- Nuevo: Registro como administrador -->
-      <div class="admin-option">
-       
-        <input type="checkbox" id="isAdmin" name="isAdmin">
-        <label for="isAdmin">¿Registrar como Administrador?</label>
+      <div class="form-group full-width">
+        <button type="submit" class="primary-btn w-100">Registrarse</button>
       </div>
-
-      <div id="adminKeyField" style="display:none;">
-        <label for="adminKey">Clave única de administrador</label>
-        <input type="password" id="adminKey" name="adminKey">
-      </div>
-
-      <button type="submit" class="primary-btn w-100">Registrarse</button>
     </form>
 
     <p class="signup-footer">
@@ -55,7 +82,6 @@
     </p>
   </div>
 </div>
-<br><br>
 
 <!-- Modal genérico para mensajes de Login/Signup -->
 <div id="messageModal" class="message-modal">
@@ -64,6 +90,6 @@
     <button id="messageCloseBtn">Aceptar</button>
   </div>
 </div>
-
+<br><br>
 <script src="/js/auth.js"></script>
 <script src="/js/register.js"></script>

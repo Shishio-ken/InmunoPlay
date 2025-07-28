@@ -1279,7 +1279,6 @@ form input:focus {
 
 .admin-option {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   margin-top: 1rem;
 }
@@ -3795,4 +3794,348 @@ body.modal-open {
 /* Fondo adaptativo al modo oscuro */
 [data-theme="dark"] .nav-links.active {
   background: #2c2c2c;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido {
+  flex: 1; /* empuja el footer hacia abajo */
+}
+
+.footer {
+  background-color: var(--accent); /* tu morado */
+  color: white;
+  padding: 2rem 4rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 6px;
+}
+
+.footer-section p {
+  margin: 0 0 10px 0;
+  line-height: 1.5;
+}
+
+.footer {
+  background-color: var(--accent);
+  color: white;
+  padding: 2rem 4rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.footer-section li i {
+  margin-right: 8px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.footer-info a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-info a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  background-color: var(--accent);
+  color: white;
+  padding: 2rem 4rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-section a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-section a:hover {
+  color: #f5d142;
+}
+
+.social-icon i {
+  margin-left: 5px;
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.social-icon i:hover {
+  transform: scale(1.2);
+}
+
+.footer {
+  background-color: var(--accent);
+  color: white;
+  padding: 2rem 4rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.footer-section h4 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding-bottom: 0.5rem;
+}
+
+.footer-section .footer-text p,
+.footer-section ul.footer-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-section ul.footer-list li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-section a {
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-section a:hover {
+  color: #f5d142;
+}
+
+.social-icon i {
+  margin-left: 5px;
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.social-icon i:hover {
+  transform: scale(1.2);
+}
+
+.signup-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem 2rem;
+  width: 100%;
+}
+
+.signup-form-grid .full-width {
+  grid-column: span 2;
+}
+
+.signup-box {
+  max-width: 900px; /* más ancho */
+  margin: auto;
+  padding: 2rem;
+  border-radius: 15px;
+  background: #1e1e2e;
+}
+
+.signup-title {
+  grid-column: span 2;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.primary-btn {
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  background: #7a4cc3;
+  color: #fff;
+}
+
+.primary-btn:hover {
+  background: #6a3db0;
+}
+
+/* Para pantallas móviles */
+@media (max-width: 768px) {
+  .signup-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .signup-form-grid .full-width {
+    grid-column: span 1;
+  }
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.password-rules {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.5rem 0 0 0;
+  padding-left: 1rem;
+}
+.password-rules li {
+  list-style: disc;
+}
+
+.password-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.password-field {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.admin-option {
+  margin-top: 1rem;
+  display: flex;
+  align-items: left;
+  gap: 0.5rem;
+}
+
+.admin-key-field {
+  margin-top: 0.5rem;
+}
+
+.admin-key-field input {
+  width: 100%;
 }

@@ -12,7 +12,6 @@ router.get('/signup', isNotLoggedIn, (req, res) => {
 router.post('/signup', isNotLoggedIn, passport.authenticate('local.signup', {
   successRedirect: '/', // va al index después de registrarse
   failureRedirect: '/signup',
-  failureFlash: true // muestra mensaje de error
 }));
 
 // Mostrar formulario de login
