@@ -3679,3 +3679,41 @@ body.modal-open {
   background: var(--accent);
   color: var(--blanco);
 }
+
+.profile-theme-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.switch-group {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+.theme-switch, .color-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.reset-btn {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.7rem 1.4rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.reset-btn:hover {
+  background: var(--accent);
+  color: var(--blanco);
+}
