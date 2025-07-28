@@ -1,50 +1,48 @@
 <main class="profile-container">
   <div class="profile-card">
-    {{!-- Avatar y botón editar --}}
-    <img id="userAvatar" src="{{user.avatar}}" alt="Avatar de {{user.username}}" class="perfil-avatar">
-    <button id="editProfileBtn" class="perfil-avatar-btn">Editar Perfil</button>
+    <!-- Controles de tema -->
+    <div class="profile-header">
+      <img id="userAvatar" src="{{user.avatar}}" alt="Avatar" class="perfil-avatar">
+      <button id="editProfileBtn" class="perfil-avatar-btn">Editar Perfil</button>
+    </div>
 
-    {{!-- Controles de tema --}}
-    <div class="profile-theme-controls">
-      <label class="theme-switch">
-        <input type="checkbox" id="darkModeToggle">
-        <span class="slider"></span>
-      </label>
-      <span class="theme-label">Modo Oscuro</span>
+    <div class="profile-theme-panel">
+      <div class="switch-group">
+        <label class="theme-switch">
+          <input type="checkbox" id="darkModeToggle">
+          <span class="slider"></span><br>
+          <span class="label-text">Oscuro</span>
+        </label>
 
-      <label class="control-colorpicker">
-        <input type="color" id="accentPicker" title="Color de acento">
-        <span class="label-text">Color Acento</span>
-      </label>
-
-      <!-- AQUÍ: el nuevo botón -->
+        <label class="color-picker"><br>
+          <input type="color" id="accentPicker">
+          <span class="label-text">Color Acento</span>
+        </label>
+      </div>
       <button id="resetColorsBtn" class="reset-btn">Resetear Colores</button>
     </div>
 
-
-    {{!-- Datos de usuario --}}
+    <!-- Datos de usuario -->
     <p><strong>Nombre:</strong> {{user.nombre}} {{user.apellido}}</p>
     <p><strong>Username:</strong> {{user.username}}</p>
     <p><strong>Email:</strong> {{user.correo}}</p>
     <p><strong>Rol:</strong> {{user.rol}}</p>
 
-    {{!-- Cerrar sesión --}}
+    <!-- Cerrar sesión -->
     <a href="/logout" class="primary-btn logout-btn">Cerrar sesión</a>
   </div>
 </main>
 
-{{!-- Modal de edición de perfil --}}
+<!-- Modal edición -->
 <div id="editProfileModal" class="editProfileModal">
   <div class="modal-card wide">
     <h3>Editar Perfil</h3>
     <form id="editProfileForm" enctype="multipart/form-data">
-      {{!-- Avatar --}}
       <div class="modal-avatar-wrapper">
         <img id="avatarPreview" src="{{user.avatar}}" alt="Vista previa avatar" class="modal-avatar-preview">
         <label for="avatarInput">Cambiar avatar</label>
         <input type="file" name="avatar" id="avatarInput" accept="image/*">
       </div>
-      {{!-- Grid de campos --}}
       <div class="modal-content-grid">
         <div class="modal-row">
           <label for="username">Username</label>
@@ -54,7 +52,6 @@
           <label for="correo">Email</label>
           <input type="email" name="correo" id="correo" value="{{user.correo}}" required>
         </div>
-
         <div class="modal-row">
           <label for="nombre">Nombre</label>
           <input type="text" name="nombre" id="nombre" value="{{user.nombre}}" required>
@@ -72,7 +69,6 @@
           <input type="password" name="confirmar" id="confirmar" placeholder="Confirma si cambiaste contraseña">
         </div>
       </div>
-      {{!-- Botones --}}
       <div class="modal-actions">
         <button type="button" id="cancelEditBtn" class="user-btn-flat">Cancelar</button>
         <button type="submit" class="primary-btn">Guardar</button>
@@ -81,7 +77,7 @@
   </div>
 </div>
 
-<!-- Modal genérico para mensajes -->
+<!-- Modal genérico mensajes -->
 <div id="messageModal" class="message-modal">
   <div class="message-content">
     <p id="messageText"></p>
@@ -89,6 +85,5 @@
   </div>
 </div>
 
-{{!-- Carga de scripts --}}
 <script src="/js/theme.js"></script>
 <script src="/js/profile.js"></script>
