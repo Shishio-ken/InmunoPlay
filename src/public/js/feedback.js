@@ -1,17 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('nav-links');
+  const modal = document.getElementById('feedbackModal');
+  if (!modal) return;  // nada que hacer si no existe
 
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
-    });
+  const closeBtn = document.getElementById('closeFeedback');
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
 
-    // Opcional: cerrar menú al hacer clic en un enlace
-    nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-      });
-    });
-  }
+  // opcional: auto-cerrar tras 5s
+  setTimeout(() => {
+    modal.classList.remove('active');
+  }, 5000);
 });
