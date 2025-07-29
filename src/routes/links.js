@@ -142,14 +142,13 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 });
 
 // Eliminar pregunta
-router.get('/delete/:id', isLoggedIn, async (req, res) => {
+router.post('/delete/:id', isLoggedIn, async (req, res) => {
   const { id } = req.params;
   try {
     await pool.query('DELETE FROM preguntas WHERE id = ?', [id]);
     req.flash('success', 'Pregunta eliminada correctamente.');
     res.redirect('/links/add');
   } catch (err) {
-    console.error('Error al eliminar pregunta:', err);
     res.status(500).send('Error al eliminar');
   }
 });

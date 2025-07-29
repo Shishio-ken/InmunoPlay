@@ -1,29 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ————— Modal genérico (reutilizable) —————
+  const msgModal = document.getElementById('messageModal');
+  const msgText = document.getElementById('messageText');
+  const msgCloseBtn = document.getElementById('messageCloseBtn');
+
+  function showMessage(text) {
+    msgText.textContent = text;
+    msgModal.classList.add('active');
+  }
+  msgCloseBtn.addEventListener('click', () => msgModal.classList.remove('active'));
+
   // ————— Referencias DOM —————
   const puzzleContainer = document.getElementById('puzzle');
-  const messageEl       = document.getElementById('message');
-  const timerEl         = document.getElementById('timer');
-  const scoreEl         = document.getElementById('score');
-  const levelEl         = document.getElementById('level');
-  const nextLevelBtn    = document.getElementById('next-level');
+  const messageEl = document.getElementById('message');
+  const timerEl = document.getElementById('timer');
+  const scoreEl = document.getElementById('score');
+  const levelEl = document.getElementById('level');
+  const nextLevelBtn = document.getElementById('next-level');
 
-  const modalBackdrop   = document.getElementById('infoModal');
-  const modalText       = document.getElementById('modalText');
-  const modalClose      = document.getElementById('modalClose');
+  const modalBackdrop = document.getElementById('infoModal');
+  const modalText = document.getElementById('modalText');
+  const modalClose = document.getElementById('modalClose');
 
-  const levelForm       = document.getElementById('levelForm');
-  const levelSelector   = document.getElementById('levelSelector');
-  const gameSection     = document.getElementById('gameSection');
+  const levelForm = document.getElementById('levelForm');
+  const levelSelector = document.getElementById('levelSelector');
+  const gameSection = document.getElementById('gameSection');
 
   // ————— Estado —————
-  let level          = 1;
-  let timer          = 0;
-  let score          = 0;
-  let interval       = null;
+  let level = 1;
+  let timer = 0;
+  let score = 0;
+  let interval = null;
   let availableImages;
-  let currentImage   = null;
-  let selectedPiece  = null; // para móvil
-  let dragSrc        = null; // para desktop
+  let currentImage = null;
+  let selectedPiece = null; // para móvil
+  let dragSrc = null; // para desktop
 
   // ————— Datos de imágenes y sus descripciones oficiales —————
   const allImages = [
@@ -43,68 +54,69 @@ document.addEventListener('DOMContentLoaded', () => {
     '/imagenes/recursos/leul4.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea en tamaño. Linfoblastos con aspecto de raqueta o “espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.',
     '/imagenes/recursos/leul5.png': 'Leucemia linfoblástica aguda L1. Linfoblastos con aspecto de raqueta o “espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×',
     '/imagenes/recursos/leul6.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea en tamaño. Linfoblastos con aspecto de raqueta o“espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.'
-    // …añade todas las que necesites
   };
 
-  // ————— Selección de nivel —————
+  // ————— Selección de nivel (validación con modal) —————
   levelForm.addEventListener('submit', e => {
     e.preventDefault();
     const sel = document.getElementById('selectedLevel').value;
-    if (!sel) return alert('Selecciona un nivel válido');
+    if (!sel) {
+      showMessage('Debes seleccionar un nivel antes de comenzar el juego.');
+      return;
+    }
     level = parseInt(sel, 10);
     levelEl.textContent = `Nivel: ${level}`;
     levelSelector.style.display = 'none';
-    gameSection.style.display   = 'block';
+    gameSection.style.display = 'block';
     initPuzzle(level);
   });
 
   // ————— Inicializar puzzle —————
   function initPuzzle(level) {
     puzzleContainer.innerHTML = '';
-    messageEl.textContent     = '';
+    messageEl.textContent = '';
     nextLevelBtn.classList.add('hidden');
     selectedPiece = null;
-    dragSrc       = null;
+    dragSrc = null;
     modalBackdrop.classList.remove('active');
 
-    const gridSize   = level === 1 ? 3 : level === 2 ? 4 : 5;
+    const gridSize = level === 1 ? 3 : level === 2 ? 4 : 5;
     const totalPieces = gridSize * gridSize;
-    const pieceSize  = 450 / gridSize;
+    const pieceSize = 450 / gridSize;
     puzzleContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${pieceSize}px)`;
 
     if (availableImages.length === 0) availableImages = [...allImages];
     const imgIndex = Math.floor(Math.random() * availableImages.length);
-    currentImage   = availableImages.splice(imgIndex, 1)[0];
+    currentImage = availableImages.splice(imgIndex, 1)[0];
 
-    const correctOrder  = Array.from({ length: totalPieces }, (_, i) => i);
+    const correctOrder = Array.from({ length: totalPieces }, (_, i) => i);
     const shuffledOrder = correctOrder.slice().sort(() => Math.random() - 0.5);
 
     shuffledOrder.forEach(pos => {
       const piece = document.createElement('div');
-      piece.className        = 'piece';
-      piece.draggable        = true;
+      piece.className = 'piece';
+      piece.draggable = true;
       piece.dataset.position = pos;
       const x = -(pos % gridSize) * pieceSize;
       const y = -Math.floor(pos / gridSize) * pieceSize;
-      piece.style.width               = `${pieceSize}px`;
-      piece.style.height              = `${pieceSize}px`;
-      piece.style.backgroundImage     = `url('${currentImage}')`;
-      piece.style.backgroundPosition  = `${x}px ${y}px`;
+      piece.style.width = `${pieceSize}px`;
+      piece.style.height = `${pieceSize}px`;
+      piece.style.backgroundImage = `url('${currentImage}')`;
+      piece.style.backgroundPosition = `${x}px ${y}px`;
 
-      // — Drag & Drop (desktop) —
+      // Drag & Drop (desktop)
       piece.addEventListener('dragstart', () => dragSrc = piece);
       piece.addEventListener('dragover', e => e.preventDefault());
       piece.addEventListener('drop', () => {
         swapPieces(dragSrc, piece);
       });
 
-      // — Click / Tap para móvil y click desktop —
+      // Click / Tap para móvil
       piece.addEventListener('click', () => {
         if (!selectedPiece) {
           selectedPiece = piece;
           piece.classList.add('selected');
         } else if (selectedPiece === piece) {
-          // cancelar selección
           piece.classList.remove('selected');
           selectedPiece = null;
         } else {
@@ -114,9 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // — Touch para móvil —
       piece.addEventListener('touchstart', e => {
-        // evitamos el ghost click
         e.preventDefault();
         if (!selectedPiece) {
           selectedPiece = piece;
@@ -134,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
       puzzleContainer.appendChild(piece);
     });
 
-    // — Timer —
     clearInterval(interval);
     timer = 0;
     timerEl.textContent = 'Tiempo: 0 s';
@@ -149,12 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!a || !b || a === b) return;
     const posA = a.dataset.position;
     const posB = b.dataset.position;
-    const bgA  = a.style.backgroundPosition;
-    const bgB  = b.style.backgroundPosition;
+    const bgA = a.style.backgroundPosition;
+    const bgB = b.style.backgroundPosition;
 
-    a.dataset.position        = posB;
+    a.dataset.position = posB;
     a.style.backgroundPosition = bgB;
-    b.dataset.position        = posA;
+    b.dataset.position = posA;
     b.style.backgroundPosition = bgA;
 
     checkWin();
@@ -162,18 +171,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ————— Comprobar victoria —————
   function checkWin() {
-    const pieces  = Array.from(document.querySelectorAll('.piece'));
+    const pieces = Array.from(document.querySelectorAll('.piece'));
     const current = pieces.map(p => parseInt(p.dataset.position, 10));
-    const gridSize= level === 1 ? 3 : level === 2 ? 4 : 5;
-    const correct = Array.from({ length: gridSize*gridSize }, (_, i) => i);
-    if (current.every((v,i) => v === correct[i])) {
+    const gridSize = level === 1 ? 3 : level === 2 ? 4 : 5;
+    const correct = Array.from({ length: gridSize * gridSize }, (_, i) => i);
+    if (current.every((v, i) => v === correct[i])) {
       clearInterval(interval);
-      const points = Math.max(100 - timer*2, 10);
+      const points = Math.max(100 - timer * 2, 10);
       score += points;
-      scoreEl.textContent  = `Puntaje: ${score}`;
-      messageEl.textContent= `¡Bien hecho! Completado en ${timer} s (+${points} pts).`;
+      scoreEl.textContent = `Puntaje: ${score}`;
+      messageEl.textContent = `¡Bien hecho! Completado en ${timer} s (+${points} pts).`;
 
-      // — Abrir modal con la info oficial —
       modalText.textContent = imageInfo[currentImage] || 'Información no disponible.';
       modalBackdrop.classList.add('active');
 
@@ -181,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ————— Cerrar modal —————
+  // ————— Cerrar modal de información —————
   modalClose.addEventListener('click', () => {
     modalBackdrop.classList.remove('active');
   });
