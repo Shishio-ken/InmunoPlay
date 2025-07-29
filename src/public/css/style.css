@@ -3801,6 +3801,7 @@ html, body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden; 
 }
 
 .contenido {
@@ -4230,4 +4231,26 @@ html, body {
   .footer-social {
     justify-content: center;
   }
+}
+
+.puzzle-grid {
+  display: grid;
+  margin: 0 auto;
+  overflow: hidden;
+  touch-action: manipulation;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .puzzle-grid {
+    width: 90vw !important;
+  }
+}
+
+.piece {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-size: cover;
+  user-select: none;
 }

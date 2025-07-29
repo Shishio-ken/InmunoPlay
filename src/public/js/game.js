@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ————— Modal genérico (reutilizable) —————
   const msgModal = document.getElementById('messageModal');
   const msgText = document.getElementById('messageText');
   const msgCloseBtn = document.getElementById('messageCloseBtn');
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   msgCloseBtn.addEventListener('click', () => msgModal.classList.remove('active'));
 
-  // ————— Referencias DOM —————
   const puzzleContainer = document.getElementById('puzzle');
   const messageEl = document.getElementById('message');
   const timerEl = document.getElementById('timer');
@@ -26,17 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const levelSelector = document.getElementById('levelSelector');
   const gameSection = document.getElementById('gameSection');
 
-  // ————— Estado —————
   let level = 1;
   let timer = 0;
   let score = 0;
   let interval = null;
   let availableImages;
   let currentImage = null;
-  let selectedPiece = null; // para móvil
-  let dragSrc = null; // para desktop
+  let selectedPiece = null;
+  let dragSrc = null;
 
-  // ————— Datos de imágenes y sus descripciones oficiales —————
   const allImages = [
     '/imagenes/recursos/leul1.png',
     '/imagenes/recursos/leul2.png',
@@ -56,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
     '/imagenes/recursos/leul6.png': 'Leucemia linfoblástica aguda L1. Celularidad homogénea en tamaño. Linfoblastos con aspecto de raqueta o“espejo de mano”. Médula ósea. Tinción de Wright. Objetivo de inmersión 100×.'
   };
 
-  // ————— Selección de nivel (validación con modal) —————
   levelForm.addEventListener('submit', e => {
     e.preventDefault();
     const sel = document.getElementById('selectedLevel').value;
@@ -71,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initPuzzle(level);
   });
 
-  // ————— Inicializar puzzle —————
   function initPuzzle(level) {
     puzzleContainer.innerHTML = '';
     messageEl.textContent = '';
@@ -82,7 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gridSize = level === 1 ? 3 : level === 2 ? 4 : 5;
     const totalPieces = gridSize * gridSize;
-    const pieceSize = 450 / gridSize;
+
+    // 🟢 Ajustar dinámicamente el ancho disponible del contenedor
+    const containerWidth = Math.min(puzzleContainer.offsetWidth || window.innerWidth * 0.9, 400);
+    const pieceSize = Math.floor(containerWidth / gridSize);
+
+    puzzleContainer.style.width = `${pieceSize * gridSize}px`;
     puzzleContainer.style.gridTemplateColumns = `repeat(${gridSize}, ${pieceSize}px)`;
 
     if (availableImages.length === 0) availableImages = [...allImages];
@@ -97,48 +96,28 @@ document.addEventListener('DOMContentLoaded', () => {
       piece.className = 'piece';
       piece.draggable = true;
       piece.dataset.position = pos;
+
       const x = -(pos % gridSize) * pieceSize;
       const y = -Math.floor(pos / gridSize) * pieceSize;
+
       piece.style.width = `${pieceSize}px`;
       piece.style.height = `${pieceSize}px`;
       piece.style.backgroundImage = `url('${currentImage}')`;
+      piece.style.backgroundSize = `${pieceSize * gridSize}px ${pieceSize * gridSize}px`;
       piece.style.backgroundPosition = `${x}px ${y}px`;
 
-      // Drag & Drop (desktop)
+      // Eventos para desktop
       piece.addEventListener('dragstart', () => dragSrc = piece);
       piece.addEventListener('dragover', e => e.preventDefault());
       piece.addEventListener('drop', () => {
         swapPieces(dragSrc, piece);
       });
 
-      // Click / Tap para móvil
-      piece.addEventListener('click', () => {
-        if (!selectedPiece) {
-          selectedPiece = piece;
-          piece.classList.add('selected');
-        } else if (selectedPiece === piece) {
-          piece.classList.remove('selected');
-          selectedPiece = null;
-        } else {
-          swapPieces(selectedPiece, piece);
-          selectedPiece.classList.remove('selected');
-          selectedPiece = null;
-        }
-      });
-
+      // Eventos para móvil
+      piece.addEventListener('click', () => handlePieceSelection(piece));
       piece.addEventListener('touchstart', e => {
         e.preventDefault();
-        if (!selectedPiece) {
-          selectedPiece = piece;
-          piece.classList.add('selected');
-        } else if (selectedPiece === piece) {
-          piece.classList.remove('selected');
-          selectedPiece = null;
-        } else {
-          swapPieces(selectedPiece, piece);
-          selectedPiece.classList.remove('selected');
-          selectedPiece = null;
-        }
+        handlePieceSelection(piece);
       });
 
       puzzleContainer.appendChild(piece);
@@ -153,7 +132,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  // ————— Intercambiar dos piezas —————
+  function handlePieceSelection(piece) {
+    if (!selectedPiece) {
+      selectedPiece = piece;
+      piece.classList.add('selected');
+    } else if (selectedPiece === piece) {
+      piece.classList.remove('selected');
+      selectedPiece = null;
+    } else {
+      swapPieces(selectedPiece, piece);
+      selectedPiece.classList.remove('selected');
+      selectedPiece = null;
+    }
+  }
+
   function swapPieces(a, b) {
     if (!a || !b || a === b) return;
     const posA = a.dataset.position;
@@ -169,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkWin();
   }
 
-  // ————— Comprobar victoria —————
   function checkWin() {
     const pieces = Array.from(document.querySelectorAll('.piece'));
     const current = pieces.map(p => parseInt(p.dataset.position, 10));
@@ -181,15 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
       score += points;
       scoreEl.textContent = `Puntaje: ${score}`;
       messageEl.textContent = `¡Bien hecho! Completado en ${timer} s (+${points} pts).`;
-
       modalText.textContent = imageInfo[currentImage] || 'Información no disponible.';
       modalBackdrop.classList.add('active');
-
       nextLevelBtn.classList.remove('hidden');
     }
   }
 
-  // ————— Cerrar modal de información —————
   modalClose.addEventListener('click', () => {
     modalBackdrop.classList.remove('active');
   });
@@ -199,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ————— Siguiente nivel —————
   nextLevelBtn.addEventListener('click', () => {
     level++;
     levelEl.textContent = `Nivel: ${level}`;
